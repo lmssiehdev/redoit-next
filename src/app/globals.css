@@ -6,6 +6,11 @@
 @import '@radix-ui/colors/mauve.css';
 @import '@radix-ui/colors/violet.css';
 
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 /* .highlight {
   background: url(//s2.svgbox.net/pen-brushes.svg?ic=brush-1&color=ffff43);
   margin: -2px -6px;

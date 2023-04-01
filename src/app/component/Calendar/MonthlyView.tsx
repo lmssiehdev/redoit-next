@@ -1,4 +1,4 @@
-import { useHabitStore } from "@/app/store/habits";
+import { useHabitStore } from "@/store/habits";
 import { useHabitPageContext } from "@/app/[habit]/[slug]/page";
 import dayjs from "dayjs";
 import Day from "../Habit/Day/Day";

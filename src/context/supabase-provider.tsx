@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { createClient } from "@/utils/supabase-browser";
+import { createClient } from "@supabase/supabase-js";
 
 import type { SupabaseClient, User } from "@supabase/auth-helpers-nextjs";
 // import type { Database } from "@/lib/database.types";
@@ -18,21 +18,28 @@ export default function SupabaseProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [supabase] = useState(() => createClient());
-  const [userId, setUserId] = useState<User | null>(null);
+  console.log("I have been rerendered");
+  const [supabase] = useState(() =>
+    createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    )
+  );
+  // const [userId, setUserId] = useState<any | null>(null);
 
-  async function ee() {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+  // useEffect(() => {
+  //   const {
+  //     data: { subscription },
+  //   } = supabase.auth.onAuthStateChange((event, session) => {
+  //     console.log(event, session);
+  //     setUserId(session);
+  //   });
 
-    setUserId(user);
-  }
-
-  ee();
+  //   return subscription.unsubscribe;
+  // }, []);
 
   return (
-    <Context.Provider value={{ supabase, userId }}>
+    <Context.Provider value={{ supabase }}>
       <>{children}</>
     </Context.Provider>
   );

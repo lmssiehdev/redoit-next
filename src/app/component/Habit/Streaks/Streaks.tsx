@@ -1,8 +1,11 @@
 import { useHabitPageContext } from "@/app/[habit]/[slug]/page";
 import { minDate, longestStreak } from "@/utils/calculateStreak";
 import clsx from "clsx";
+import { streakRanges } from "date-streaks";
+import { useState, useEffect } from "react";
+import dayjs from "dayjs";
 
-const convertHexToRGBA = (hexCode, opacity = 1) => {
+const convertHexToRGBA = (hexCode = "", opacity = 1) => {
   let hex = hexCode.replace("#", "");
 
   if (hex.length === 3) {
@@ -28,35 +31,71 @@ const convertHexToRGBA = (hexCode, opacity = 1) => {
   return highlight;
 };
 
+type RangeReturnType = ReturnType<typeof streakRanges>;
+
+interface IStreakRange extends RangeReturnType {
+  percentage: number;
+}
+
+function getTop5RangesPercentages(ranges: RangeReturnType): number[] {
+  const totalSum = ranges.reduce((sum, range) => sum + range.duration, 0);
+  const percentages = ranges.map((range) => (range.duration / totalSum) * 100);
+  return percentages;
+}
+
 export default function Streaks() {
-  const habit = useHabitPageContext();
+  const { completedDates, color } = useHabitPageContext();
   const mockData = ["50%", "20%", "60%", "70%"];
-  const highlight = convertHexToRGBA(habit.color);
+  const highlight = convertHexToRGBA(color);
+  const [streaksArray, setStreaksArray] = useState<IStreakRange[]>([]);
+
+  useEffect(() => {
+    const ranges = streakRanges({
+      dates: Object.keys(completedDates),
+    });
+
+    const sortedRanges = ranges.sort((a, b) => b.duration - a.duration);
+    const top5Ranges = sortedRanges.slice(0, 5);
+    const top5RangesPercentages = getTop5RangesPercentages(top5Ranges);
+
+    const updatedRage = top5Ranges.map((item, index) => {
+      return {
+        ...item,
+        percentage: top5RangesPercentages[index],
+      };
+    });
+
+    setStreaksArray(updatedRage);
+    console.log(updatedRage);
+  }, [completedDates]);
+
+  console.log("streaks has been rerendered");
 
   return (
     <>
-      {JSON.stringify(habit.completedDates)}
-      <div>{JSON.stringify(longestStreak(habit.completedDates))}</div>
-
-      {/* {currentStreak(habit.completedDates).map((item, index) => (
-        <div key={index}>
-          {JSON.stringify(item.starting_date)}
-          <span>{item.streak}</span>
-          {JSON.stringify(item.end_date)}
-        </div>
-      ))} */}
-      <div className="flex flex-col items-center gap-1">
-        {mockData.map((percentage, index) => (
-          <span
-            key={index}
-            className={clsx("highlight yellow text-center max-w-[400px]")}
-            style={{
-              width: percentage,
-              ...highlight,
-            }}
-          >
-            {percentage}
-          </span>
+      <div className="flex flex-col items-center justify-center gap-2 max-w-[400px] ">
+        {streaksArray.map((item, index) => (
+          <div key={index} className="flex-1 w-full flex justify-center gap-2 ">
+            <span className="whitespace-nowrap text-sm  flex items-center">
+              {dayjs(new Date(item.start)).format("MMM DD")}
+            </span>
+            <div
+              className={clsx(
+                "highlight yellow text-center justify-center px-1 min-w-fit py-[0.1rem]"
+              )}
+              style={{
+                width: `${item.percentage}%`,
+                ...highlight,
+              }}
+            >
+              <span className="mx-1 block">{item.duration}</span>
+            </div>
+            <span className="whitespace-nowrap text-sm flex items-center">
+              {dayjs(new Date(item.end ? item.end : item.start)).format(
+                "MMM DD"
+              )}
+            </span>
+          </div>
         ))}
       </div>
     </>

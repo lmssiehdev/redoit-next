@@ -55,7 +55,6 @@ function CalendarWrapper() {
         daysInMonth={now.daysInMonth}
         date={{ year: now.year, month: now.month }}
       />
-      <p>The current breakpoint is {breakpoint}!</p>;
     </div>
   );
 }

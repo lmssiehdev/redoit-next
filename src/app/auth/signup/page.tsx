@@ -10,6 +10,7 @@ import { useState } from "react";
 export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
   const { supabase } = useSupabase();
   const router = useRouter();
@@ -25,6 +26,7 @@ export default function SignUp() {
     }
 
     try {
+      setIsLoading(true);
       const { error } = await supabase.auth.signUp({
         email,
         password,
@@ -37,7 +39,10 @@ export default function SignUp() {
       }
 
       router.push("/");
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleSignUpWithGoogle = async () => {
@@ -96,8 +101,8 @@ export default function SignUp() {
         {formError && (
           <p className="text-red-400 font-bold text-sm">{formError}</p>
         )}
-        <Button type="submit" color="green" primary>
-          Sign Up
+        <Button disabled={isLoading} type="submit" color="green" primary>
+          {isLoading ? "loading..." : "Sign Up"}
         </Button>
       </form>
 

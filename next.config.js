@@ -1,6 +1,6 @@
 const withPWA = require("@ducanh2912/next-pwa").default({
   dest: "public",
-  disable: true,
+  disable: false,
 });
 
 /** @type {import('next').NextConfig} */

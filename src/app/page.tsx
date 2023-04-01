@@ -1,28 +1,28 @@
-import Navbar from "@/components/Navbar";
-import Button from "@/components/common/Button";
+"use client";
+
+import LandingPageCallToAction from "@/components/LandingPageCallToAction";
+import { ClickToComponent } from "click-to-react-component";
 import Image from "next/image";
 
 export default function Home() {
   return (
     <>
-      {/* <h2 className="text-2xl highlight">My Habits</h2>
-      <Habit /> */}
-
       <div>
         <div className="my-10">
-          <h2 className="text-center  text-2xl">
+          <h2 className="text-center text-3xl leading-10">
             Every habit, every day,{" "}
             <span className="block">
-              with <span>Redoit</span> you'll pave the way.
+              with{" "}
+              <span className="font-bold relative before:absolute before:z-[-1] before: before:bottom-[15%] before:left-0 before:h-[30%] before:w-full before:bg-gradient-to-r from-orange-200 via-orange-300 to-orange-400 bg-opacity-90">
+                Redoit
+              </span>{" "}
+              {"you'll"} pave the way.
             </span>
           </h2>
           <div className="flex justify-center my-5">
-            <Button className="text-center" color="red" size="sm" secondary>
-              Get Started
-            </Button>
+            <LandingPageCallToAction />
           </div>
         </div>
-
         <div>
           <Image
             src="/images/preview_screenshot.png"
@@ -31,6 +31,7 @@ export default function Home() {
             alt="app preview screenshot"
           />
         </div>
+        <ClickToComponent />
       </div>
     </>
   );

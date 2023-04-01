@@ -1,4 +1,4 @@
-import { habitStatus } from "@/app/store/habits";
+import { habitStatus } from "@/store/habits";
 
 export type Dates = {
   [key: string]: habitStatus;

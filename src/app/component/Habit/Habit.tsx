@@ -1,5 +1,11 @@
 "use client";
 
+import AddHabitModal from "@/app/component/Habit/Modal";
+import { FireIcon, PenIcon } from "@/app/component/Icons";
+import Button from "@/components/common/Button";
+import { IHabit, useHabitStore } from "@/store/habits";
+import { currentStreak } from "@/utils/calculateStreak";
+import { streakRanges, summary, trackRecord } from "date-streaks";
 import dayjs from "dayjs";
 import Link from "next/link";
 import {
@@ -9,19 +15,17 @@ import {
   useReducer,
   useState,
 } from "react";
-import { useHabitStore } from "@/app/store/habits";
-import { FireIcon, PenIcon } from "@/app/component/Icons";
+import { useSupabase } from "../../../context/supabase-provider";
 import Day from "./Day/Day";
 import VerticalCalendarWrapper from "./VerticalCalendar/VerticalCalendar";
-import { currentStreak, longestStreak } from "@/utils/calculateStreak";
-import { IHabit } from "@/app/store/habits";
-import AddHabitModal from "@/app/component/Habit/Modal";
-import Button from "@/components/common/Button";
 
 interface IhabitContext {
   calendarDates: string[];
   goToPrevDay: () => void;
   goToNextDay: () => void;
+  habits: {
+    [id: string]: IHabit;
+  };
 }
 
 const habitContext = createContext({} as IhabitContext);
@@ -57,15 +61,8 @@ export default function Habit() {
   const [state, dispatch] = useReducer(reducer, {
     date: dayjs(),
   });
-
-  const { habits, addHabit } = useHabitStore((state) => state);
-
-  const archivedHabits = Object.keys(habits).filter(
-    (key) => habits[key].archived
-  );
-  const activeHabits = Object.keys(habits).filter(
-    (key) => !habits[key].archived
-  );
+  const { supabase, userId } = useSupabase();
+  const { addHabit, habits } = useHabitStore((state) => state);
 
   useEffect(() => {
     setLast7Days([]);
@@ -83,41 +80,29 @@ export default function Habit() {
         calendarDates: last7Days,
         goToNextDay: () => dispatch({ type: "NextDay" }),
         goToPrevDay: () => dispatch({ type: "PrevDay" }),
+        habits,
       }}
     >
       <>
-        {activeHabits.length > 0 ? (
-          <>
-            <VerticalCalendarWrapper />
-            {activeHabits.map((key) => {
-              const habit = habits[key];
-              return (
-                <div
-                  key={key}
-                  className="my-2 grid grid-cols-[minmax(100px,200px),6fr,40px] gap-3"
-                >
-                  <HabitRow habit={habit} />
-                </div>
-              );
-            })}
-            <AddHabitModal onClose={(payload) => addHabit(payload)}>
-              <Button color="green" size="sm" primary>
-                Add Habit
-              </Button>
-            </AddHabitModal>
-          </>
-        ) : (
-          <div className="flex flex-col items-center">
-            <div>
-              <div>please create a habit</div>
-              <AddHabitModal onClose={(payload) => addHabit(payload)}>
-                <Button color="green" size="sm" primary>
-                  Add Habit
-                </Button>
-              </AddHabitModal>
-            </div>
-          </div>
-        )}
+        <>
+          <VerticalCalendarWrapper />
+          {Object.keys(habits).map((key) => {
+            const habit = habits[key];
+            return (
+              <div
+                key={key}
+                className="my-2 grid grid-cols-[minmax(100px,200px),6fr,40px] gap-3"
+              >
+                <HabitRow habit={habit} />
+              </div>
+            );
+          })}
+          <AddHabitModal onClose={(payload) => addHabit(payload)}>
+            <Button color="green" size="sm" primary>
+              Add Habit
+            </Button>
+          </AddHabitModal>
+        </>
       </>
     </habitContext.Provider>
   );
@@ -133,6 +118,7 @@ const HabitRow = ({ habit }: { habit: IHabit }) => {
       <div className="flex items-center justify-between gap-4">
         <HabitCard name={name} id={id} color={color} />
       </div>
+
       <div className="flex ">
         <div className="flex flex-1 justify-between gap-2">
           {calendarDates.map((date, index) => {
@@ -158,7 +144,7 @@ const HabitRow = ({ habit }: { habit: IHabit }) => {
       <div className="font-andalusia flex ">
         <div className="inline-flex justify-center gap-1 self-center ">
           <FireIcon className="h-4 " />
-          {currentStreak(completedDates)}
+          {summary({ dates: Object.keys(completedDates) }).currentStreak}
         </div>
       </div>
     </>
@@ -178,14 +164,18 @@ export const HabitCard = ({
 
   return (
     <>
-      <div className="flex items-center gap-2">
-        <span
-          style={{
-            backgroundColor: color,
-          }}
-          className="h-2 w-2 rounded-full"
-        ></span>
-        <Link href={`habit/${id}/`}>{name}</Link>
+      <div className="flex items-center gap-2 overflow-hidden">
+        <div>
+          <div
+            style={{
+              backgroundColor: color,
+            }}
+            className="h-2 w-2 rounded-full block"
+          ></div>
+        </div>
+        <Link href={`habit/${id}/`} className="overflow-hidden text-ellipsis">
+          {name}
+        </Link>
       </div>
       <AddHabitModal
         id={id}
@@ -193,7 +183,9 @@ export const HabitCard = ({
           editHabit(id, payload);
         }}
       >
-        <PenIcon className="h-4" />
+        <div>
+          <PenIcon className="h-4 ml-1" />
+        </div>
       </AddHabitModal>
     </>
   );

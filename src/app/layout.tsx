@@ -1,7 +1,5 @@
+import SupabaseProvider from "../context/supabase-provider";
 import "./globals.css";
-import { createClient } from "@/utils/supabase-server";
-import { createServerComponentSupabaseClient } from "@supabase/auth-helpers-nextjs";
-import { cookies, headers } from "next/headers";
 
 import { Indie_Flower } from "next/font/google";
 import localFont from "next/font/local";
@@ -19,8 +17,8 @@ const andalusia = localFont({
   display: "swap",
 });
 
-import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
+import type { Metadata } from "next";
 
 const APP_NAME = "PWA App";
 const APP_DEFAULT_TITLE = "My Awesome PWA App";
@@ -87,12 +85,30 @@ export default async function RootLayout({
   const data = {};
   return (
     <html lang="en" className={`${indieFlower.variable} ${andalusia.variable}`}>
-      <body className="flex flex-col min-h-[100vh] font-indieFlower bg-[#faf0e4]">
-        <div className="max-w-[1000px] mx-auto">
-          <Navbar className="md:w-[500px]" />
-          <main className="flex-1 flex-wrap mx-auto">{children}</main>
-        </div>
+      <body className="flex flex-col min-h-[100vh] px-2 font-indieFlower bg-[#faf0e4]">
+        <SupabaseProvider>
+          <Navbar className="lg:w-[500px] lg:mx-auto mb-4" />
+          <div className="max-w-[1000px] mx-auto flex-1">
+            <main className="flex-1 flex-wrap mx-auto">{children}</main>
+          </div>
+        </SupabaseProvider>
+
+        <Footer />
       </body>
     </html>
   );
 }
+
+const Footer = () => {
+  return (
+    <footer className="mx-auto py-2">
+      <a
+        className="underline underline-offset-2 "
+        href="https://tally.so/r/wvMWaA"
+        target="_blank"
+      >
+        send feedback please ↗︎
+      </a>
+    </footer>
+  );
+};

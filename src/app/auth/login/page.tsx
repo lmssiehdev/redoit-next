@@ -10,6 +10,7 @@ import { useSupabase } from "../../../context/supabase-provider";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
   const { supabase } = useSupabase();
   const router = useRouter();
@@ -25,6 +26,7 @@ export default function Login() {
     }
 
     try {
+      setIsLoading(true);
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -37,7 +39,10 @@ export default function Login() {
       }
 
       router.push("/");
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleLoginWithGoogle = async () => {
@@ -97,8 +102,8 @@ export default function Login() {
         {formError && (
           <p className="text-red-400 font-bold text-sm">{formError}</p>
         )}
-        <Button type="submit" color="green" primary>
-          Login
+        <Button disabled={isLoading} type="submit" color="green" primary>
+          {isLoading ? "loading..." : "Login"}
         </Button>
       </form>
       <div className="my-3 text-center">
