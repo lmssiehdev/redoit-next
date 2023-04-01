@@ -15,6 +15,7 @@ import {
   useReducer,
   useState,
 } from "react";
+import { useBreakpoint } from "use-breakpoint";
 import { useSupabase } from "../../../context/supabase-provider";
 import Day from "./Day/Day";
 import VerticalCalendarWrapper from "./VerticalCalendar/VerticalCalendar";
@@ -55,6 +56,8 @@ function reducer(state: State, action: Action) {
   }
 }
 
+const BREAKPOINTS = { 3: 0, 4: 420, 6: 576, 7: 700 };
+
 export default function Habit() {
   // Get the current date
   const [last7Days, setLast7Days] = useState<string[]>([]);
@@ -63,16 +66,17 @@ export default function Habit() {
   });
   const { supabase, userId } = useSupabase();
   const { addHabit, habits } = useHabitStore((state) => state);
+  const { breakpoint } = useBreakpoint(BREAKPOINTS, 5);
 
   useEffect(() => {
     setLast7Days([]);
     const arr: string[] = [];
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < breakpoint; i++) {
       const date = state.date.subtract(i, "day");
       arr.push(date.toString());
     }
     setLast7Days([...arr.reverse()]);
-  }, [state.date]);
+  }, [state.date, breakpoint]);
 
   return (
     <habitContext.Provider

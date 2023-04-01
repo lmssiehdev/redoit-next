@@ -25,10 +25,7 @@ function reducer(state: State, action: Action) {
   }
 }
 
-const BREAKPOINTS = { mobile: 0, tablet: 768, desktop: 1280 };
-
 function CalendarWrapper() {
-  const { breakpoint } = useBreakpoint(BREAKPOINTS, "desktop");
   const [state, dispatch] = useReducer(reducer, {
     date: dayjs(),
   });
