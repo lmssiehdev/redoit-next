@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import Values from "values.js";
+import { w } from "windstitch";
 
 interface DayProps {
   /**
@@ -22,6 +23,25 @@ interface DayProps {
   isActiveDay: boolean;
 }
 
+const Div = w.div("border-dashed border-[1px] border-black/60 text-white", {
+  variants: {
+    shape: {
+      rounded: "rounded-full",
+    },
+    sise: {
+      md: "h-7 w-7",
+      lg: "h-9 w-9",
+    },
+    checked: (yes: boolean, color: string) => (yes ? "amazing" : color),
+    isActiveDay: (yes: boolean) =>
+      yes ? "!border-solid" : "opacity-50 cursor-not-allowed",
+  },
+  defaultVariants: {
+    shape: "rounded",
+    size: "md",
+  },
+});
+
 export default function Day({
   status,
   color,
@@ -30,7 +50,7 @@ export default function Day({
   isActiveDay,
 }: DayProps) {
   const getColor = () => {
-    if (!isActiveDay)
+    if (!isActiveDay || status === "skipped")
       return `repeating-linear-gradient(
       -45deg,
       transparent,
@@ -38,36 +58,33 @@ export default function Day({
       ${color} 2px,
       ${color} 4px
       )`;
+
     if (status === "checked") return color;
-    else if (status === "skipped") {
-      return `repeating-linear-gradient(
-      -45deg,
-      transparent,
-      transparent 1px,
-      ${color} 2px,
-      ${color} 4px
-      )`;
-    }
     return "";
   };
+
+  // const isActiveDayC =e
+  //   isActiveDay && (status === "skipped" || status === "chcked");
+
+  const handleOnClick = () => {
+    if (!isActiveDay) return;
+    onClick && onClick();
+    return;
+  };
   return (
-    <div
+    <Div
       title={status}
-      onClick={onClick}
+      onClick={handleOnClick}
       style={{
         background: getColor(),
       }}
-      className={clsx(
-        className,
-        {
-          "opacity-50 cursor-not-allowed ": !isActiveDay,
-          "!border-solid":
-            (status === "skipped" || status === "checked") && isActiveDay,
-        },
-        "border-dashed border-[1px] border-black/60 h-7 w-7 rounded-full text-white"
-      )}
+      shape="rounded"
+      sise="lg"
+      checked={true}
+      isActiveDay={isActiveDay}
+      className={clsx(className)}
     >
       <span className="invisible">.</span>
-    </div>
+    </Div>
   );
 }
