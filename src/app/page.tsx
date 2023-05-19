@@ -24,7 +24,7 @@ export default function Home() {
             <LandingPageCallToAction />
           </div>
         </div>
-        <DummyHabitDemo />
+        {/* <DummyHabitDemo /> */}
         <div>
           <Image
             src="/images/preview_screenshot.png"
