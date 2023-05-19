@@ -1,17 +1,14 @@
-const withPWA = require("@ducanh2912/next-pwa").default({
-  dest: "public",
-  disable: false,
-});
+// const withPWA = require("@ducanh2912/next-pwa").default({
+//   dest: "public",
+//   disable: false,
+// });
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
     appDir: true,
   },
-  typescript: {
-    ignoreBuildErrors: true,
-    ignoreBuildErrors: true,
-  },
+  typescript: {},
   eslint: {
     ignoreBuildErrors: true,
     ignoreDuringBuilds: true,
@@ -36,4 +33,5 @@ const nextConfig = {
   },
 };
 
-module.exports = withPWA(nextConfig);
+// module.exports = withPWA(nextConfig);
+module.exports = nextConfig;
