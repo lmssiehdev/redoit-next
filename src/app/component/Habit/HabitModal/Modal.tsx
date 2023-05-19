@@ -135,7 +135,6 @@ const DialogDemo2 = ({
           {/* <Dialog.Description className="mt-2 text-sm font-normal text-gray-700 dark:text-gray-400">
             {"Make changes to your profile here. Click save when you're done."}
           </Dialog.Description> */}
-          {JSON.stringify(state)}
           <div>
             <label
               htmlFor="name"
@@ -202,7 +201,9 @@ const DialogDemo2 = ({
               </Button>
             )}
             <Dialog.Close onClick={() => handleSave()}>
-              <Button color="green">{id ? "Update Habit" : "Add Habit"}</Button>
+              <Button color="green" className="ml-auto">
+                {id ? "Update Habit" : "Add Habit"}
+              </Button>
             </Dialog.Close>
           </div>
           <Dialog.Close asChild>

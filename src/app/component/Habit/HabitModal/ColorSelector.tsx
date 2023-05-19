@@ -16,8 +16,8 @@ export const ColorSelector = ({
     "#ffda93",
     "#f9ac78",
     "#bc8294",
-    "#ffda93",
-    "#f9ac78",
+    "#e55a79",
+    "#9AC885",
   ];
 
   return (
