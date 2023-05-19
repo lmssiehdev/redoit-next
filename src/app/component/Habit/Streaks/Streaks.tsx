@@ -1,4 +1,4 @@
-import { useHabitPageContext } from "@/app/[habit]/[slug]/page";
+import { useHabitPageContext } from "@/app/[habit]/[slug]/context";
 import { minDate, longestStreak } from "@/utils/calculateStreak";
 import clsx from "clsx";
 import { streakRanges } from "date-streaks";
@@ -33,9 +33,12 @@ const convertHexToRGBA = (hexCode = "", opacity = 1) => {
 
 type RangeReturnType = ReturnType<typeof streakRanges>;
 
-interface IStreakRange extends RangeReturnType {
+type IStreakRange = {
+  start: Date;
+  end: Date | null;
+  duration: number;
   percentage: number;
-}
+};
 
 function getTop5RangesPercentages(ranges: RangeReturnType): number[] {
   const totalSum = ranges.reduce((sum, range) => sum + range.duration, 0);

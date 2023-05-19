@@ -4,14 +4,9 @@ import CalendarWrapper from "@/app/component/Calendar/CalendarWrapper";
 import MyResponsiveLine from "@/app/component/Charts/Chart";
 import { HabitCard } from "@/app/component/Habit/Habit";
 import Streaks from "@/app/component/Habit/Streaks/Streaks";
-import { IHabit, useHabitStore } from "@/store/habits";
-import { createContext, useContext } from "react";
+import { useHabitStore } from "@/store/habits";
+import { HabitContextProvider } from "./context";
 
-const habitPageContext = createContext({} as IHabit);
-
-export const useHabitPageContext = () => {
-  return useContext(habitPageContext);
-};
 export default function Habit({
   params: { slug },
 }: {
@@ -19,7 +14,7 @@ export default function Habit({
 }) {
   const habits = useHabitStore((state) => state.habits);
 
-  if (!habits[slug]) return <div>Habit Doesn't Exist</div>;
+  if (!habits[slug]) return <div>{"Habit Doesn't Exist"}</div>;
 
   const { name, id, color, completedDates } = habits[slug];
 
@@ -29,7 +24,7 @@ export default function Habit({
         <HabitCard name={name} id={id} color={color} />
       </div>
 
-      <habitPageContext.Provider value={habits[slug]}>
+      <HabitContextProvider value={habits[slug]}>
         <div className="">
           <CalendarWrapper />
           {Object.keys(completedDates).length > 0 && (
@@ -49,7 +44,7 @@ export default function Habit({
             </>
           )}
         </div>
-      </habitPageContext.Provider>
+      </HabitContextProvider>
     </div>
   );
 }
