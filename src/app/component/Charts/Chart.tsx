@@ -11,7 +11,15 @@ const MyResponsiveLine = ({
   data,
   color,
 }: {
-  data: typeof data2;
+  data: Array<{
+    id: string;
+    color: string;
+    data: {
+      x: string;
+      y: number;
+      day?: string;
+    }[];
+  }>;
   color: string;
 }) => (
   <ResponsiveLine
@@ -40,7 +48,7 @@ const MyResponsiveLine = ({
     lineWidth={3}
     // enableArea={true}
     curve="linear"
-    legend={null}
+    // legend={null}
     colors={[color]}
     theme={{
       fontFamily: "inherit",
@@ -101,7 +109,6 @@ const ChartWrapper = ({
 
   return (
     <>
-      {/* {JSON.stringify(normalizedData)} */}
       <MyResponsiveLine data={data2} color={color} />
     </>
   );

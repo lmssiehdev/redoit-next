@@ -2,7 +2,6 @@
 
 import Button from "@/components/common/Button";
 import { GoogleIcon } from "@/app/component/Icons";
-import { useSupabase } from "@/context/supabase-provider";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -12,56 +11,13 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
-  const { supabase } = useSupabase();
   const router = useRouter();
 
-  const handleSignUp = async (e) => {
+  const handleSignUp = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    setFormError(null);
-
-    if (password.length < 6) {
-      setFormError("Invalid password. Must be 6 characters or longer.");
-
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-      });
-
-      if (error) {
-        console.log("error", error.message);
-        setFormError(error.message);
-        return;
-      }
-
-      router.push("/");
-    } catch (error) {
-    } finally {
-      setIsLoading(false);
-    }
   };
 
-  const handleSignUpWithGoogle = async () => {
-    console.log(" I have been called");
-    try {
-      const { data, error } = await supabase.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo: "/welcome",
-        },
-      });
-
-      if (error) {
-        console.log("error", error.message);
-        setFormError(error.message);
-        return;
-      }
-    } catch (error) {}
-  };
+  const handleSignUpWithGoogle = async () => {};
 
   return (
     <div className="w-[300px] mx-auto">
@@ -101,7 +57,7 @@ export default function SignUp() {
         {formError && (
           <p className="text-red-400 font-bold text-sm">{formError}</p>
         )}
-        <Button disabled={isLoading} type="submit" color="green" primary>
+        <Button disabled={isLoading} type="submit" color="green" mode="primary">
           {isLoading ? "loading..." : "Sign Up"}
         </Button>
       </form>

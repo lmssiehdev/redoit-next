@@ -2,13 +2,11 @@
 
 import Habit from "@/app/component/Habit/Habit";
 import { useHabitStore } from "@/store/habits";
-import AddHabitModal from "@/app/component/Habit/Modal";
+import AddHabitModal from "@/app/component/Habit/HabitModal/Modal";
 import Button from "@/components/common/Button";
-import { useSupabase } from "@/context/supabase-provider";
 
 export default function Web() {
   const habits = useHabitStore((state) => state.habits);
-  const { supabase, userId } = useSupabase();
 
   // async function ee() {
   //   const { data, error } = await supabase
@@ -63,7 +61,7 @@ const PageContent = () => {
           <div className="text-center">
             <div className="py-3 text-3xl">please create a habit</div>
             <AddHabitModal onClose={(payload) => addHabit(payload)}>
-              <Button color="green" size="sm" primary>
+              <Button color="green" size="sm" mode="primary">
                 Add Habit
               </Button>
             </AddHabitModal>

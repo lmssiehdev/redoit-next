@@ -7,6 +7,7 @@ export type Dates = {
 export function minDate(dates: Dates) {
   const keys = Object.keys(dates);
   if (typeof keys !== "undefined" && keys.length > 0) {
+    // @ts-expect-error
     return keys.reduce(function (p, v) {
       const pd = new Date(p),
         vd = new Date(v);
@@ -19,7 +20,7 @@ export function currentStreak(dates: Dates) {
   let streak = 0;
   let skippedDays = 0;
   let n = new Date(new Date().setDate(new Date().getDate() + 1));
-  const min = new Date(minDate(dates));
+  const min = new Date(minDate(dates) as string);
   let key = "";
   while (min <= n) {
     n = new Date(n.setDate(n.getDate() - 1));
@@ -44,11 +45,11 @@ export function currentStreak(dates: Dates) {
   return streak;
 }
 
-export function longestStreak(dates) {
+export function longestStreak(dates: Dates) {
   let streak = 0;
   let max = 0;
   let n = new Date(new Date().setDate(new Date().getDate() + 1));
-  const min = new Date(minDate(dates));
+  const min = new Date(minDate(dates) as string);
   let key = "";
 
   while (min < n) {

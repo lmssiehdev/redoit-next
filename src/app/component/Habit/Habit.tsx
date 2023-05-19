@@ -1,6 +1,6 @@
 "use client";
 
-import AddHabitModal from "@/app/component/Habit/Modal";
+import AddHabitModal from "@/app/component/Habit/HabitModal/Modal";
 import { FireIcon, PenIcon } from "@/app/component/Icons";
 import Button from "@/components/common/Button";
 import { IHabit, useHabitStore } from "@/store/habits";
@@ -16,9 +16,9 @@ import {
   useState,
 } from "react";
 import { useBreakpoint } from "use-breakpoint";
-import { useSupabase } from "../../../context/supabase-provider";
 import Day from "./Day/Day";
-import VerticalCalendarWrapper from "./VerticalCalendar/VerticalCalendar";
+import VerticalCalendarWrapper from "./VerticalCalendar";
+import { useRouter, usePathname } from "next/navigation";
 
 interface IhabitContext {
   calendarDates: string[];
@@ -59,14 +59,15 @@ function reducer(state: State, action: Action) {
 const BREAKPOINTS = { 3: 0, 4: 420, 6: 576, 7: 700 };
 
 export default function Habit() {
+  const path = usePathname();
+  console.log(path);
   // Get the current date
   const [last7Days, setLast7Days] = useState<string[]>([]);
   const [state, dispatch] = useReducer(reducer, {
     date: dayjs(),
   });
-  const { supabase, userId } = useSupabase();
   const { addHabit, habits } = useHabitStore((state) => state);
-  const { breakpoint } = useBreakpoint(BREAKPOINTS, 5);
+  const { breakpoint } = useBreakpoint(BREAKPOINTS, 7);
 
   useEffect(() => {
     setLast7Days([]);
@@ -102,7 +103,7 @@ export default function Habit() {
             );
           })}
           <AddHabitModal onClose={(payload) => addHabit(payload)}>
-            <Button color="green" size="sm" primary>
+            <Button color="green" size="sm" mode="primary">
               Add Habit
             </Button>
           </AddHabitModal>

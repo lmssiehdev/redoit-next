@@ -1,7 +1,5 @@
-import { Stats } from "fs";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
-import { Checked } from "../app/component/Habit/Day/Day.stories";
 
 export type habitStatus = "checked" | "skipped";
 

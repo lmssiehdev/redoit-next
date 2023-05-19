@@ -1,4 +1,3 @@
-import SupabaseProvider from "../context/supabase-provider";
 import "./globals.css";
 
 import { Indie_Flower } from "next/font/google";
@@ -86,12 +85,10 @@ export default async function RootLayout({
   return (
     <html lang="en" className={`${indieFlower.variable} ${andalusia.variable}`}>
       <body className="flex flex-col min-h-[100vh] px-2 font-indieFlower bg-[#faf0e4]">
-        <SupabaseProvider>
-          <Navbar className="lg:w-[500px] lg:mx-auto mb-4" />
-          <div className="max-w-[1000px] mx-auto flex-1">
-            <main className="flex-1 flex-wrap mx-auto">{children}</main>
-          </div>
-        </SupabaseProvider>
+        <Navbar className="lg:w-[500px] lg:mx-auto mb-4" />
+        <div className="max-w-[1000px] mx-auto flex-1">
+          <main className="flex-1 flex-wrap mx-auto">{children}</main>
+        </div>
 
         <Footer />
       </body>

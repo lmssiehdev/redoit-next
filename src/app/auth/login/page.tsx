@@ -5,63 +5,20 @@ import { GoogleIcon } from "@/app/component/Icons";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEventHandler, useState } from "react";
-import { useSupabase } from "../../../context/supabase-provider";
+import Input from "@/components/common/Input";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
-  const { supabase } = useSupabase();
   const router = useRouter();
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    setFormError(null);
-
-    if (password.length < 6) {
-      setFormError("Invalid password. Must be 6 characters or longer.");
-
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (error) {
-        console.log("error", error.message);
-        setFormError(error.message);
-        return;
-      }
-
-      router.push("/");
-    } catch (error) {
-    } finally {
-      setIsLoading(false);
-    }
   };
 
-  const handleLoginWithGoogle = async () => {
-    console.log(" I have been called");
-    try {
-      const { data, error } = await supabase.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo: "/welcome",
-        },
-      });
-
-      if (error) {
-        console.log("error", error.message);
-        setFormError(error.message);
-        return;
-      }
-    } catch (error) {}
-  };
+  const handleLoginWithGoogle = async () => {};
 
   return (
     <div className="w-[300px] mx-auto">
@@ -78,11 +35,10 @@ export default function Login() {
           <label className="flex flex-col gap-1">
             <span className="font-bold">Email</span>
             <input
-              className="border-[1.5px] border-solid rounded-[0_0_125px_3px/3px_85px_5px_55px] py-1 px-2"
               placeholder="example@gmail.com"
               type="email"
               value={email}
-              onChange={({ target }) => setEmail(target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </label>
         </fieldset>
@@ -90,7 +46,6 @@ export default function Login() {
           <label className="flex flex-col gap-1">
             <span className="font-bold">Password</span>
             <input
-              className="border-[1.5px] border-solid rounded-[0_0_125px_3px/3px_85px_5px_55px] py-1 px-2"
               placeholder="Enter your password..."
               minLength={6}
               type="password"
@@ -102,7 +57,7 @@ export default function Login() {
         {formError && (
           <p className="text-red-400 font-bold text-sm">{formError}</p>
         )}
-        <Button disabled={isLoading} type="submit" color="green" primary>
+        <Button disabled={isLoading} type="submit" color="green" mode="primary">
           {isLoading ? "loading..." : "Login"}
         </Button>
       </form>

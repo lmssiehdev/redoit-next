@@ -1,8 +1,9 @@
 "use client";
 
+import DummyHabitDemo from "@/components/DummyHabitDemo";
 import LandingPageCallToAction from "@/components/LandingPageCallToAction";
-import { ClickToComponent } from "click-to-react-component";
 import Image from "next/image";
+import Habit from "./component/Habit/Habit";
 
 export default function Home() {
   return (
@@ -23,6 +24,7 @@ export default function Home() {
             <LandingPageCallToAction />
           </div>
         </div>
+        <DummyHabitDemo />
         <div>
           <Image
             src="/images/preview_screenshot.png"
@@ -31,7 +33,6 @@ export default function Home() {
             alt="app preview screenshot"
           />
         </div>
-        <ClickToComponent />
       </div>
     </>
   );
