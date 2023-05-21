@@ -4,12 +4,13 @@ import React, { useReducer, useState } from "react";
 
 import { CrossIcon } from "@/app/component/Icons";
 import Button from "@/components/common/Button";
-import { IHabit, useHabitStore } from "@/store/habits";
-import { ArchivedToggle } from "./ArchivedToggle";
-import { FrequencySelector } from "./FrequencySelector";
-import { ColorSelector } from "./ColorSelector";
-import clsx from "clsx";
 import Input from "@/components/common/Input";
+import { useHabitStore } from "@/store/habits";
+import type { Habit } from "@/types/habitTypes";
+import clsx from "clsx";
+import { ArchivedToggle } from "./ArchivedToggle";
+import { ColorSelector } from "./ColorSelector";
+import { FrequencySelector } from "./FrequencySelector";
 
 const emptyHabit = {
   name: "",
@@ -25,7 +26,7 @@ type HabitAction =
   | { type: "archived"; value: boolean }
   | { type: "reset"; value?: typeof emptyHabit };
 
-function habitReducer(state: Partial<IHabit>, action: HabitAction) {
+function habitReducer(state: Partial<Habit.Definition>, action: HabitAction) {
   switch (action.type) {
     case "name":
       return {
@@ -68,7 +69,7 @@ const DialogDemo2 = ({
   children,
 }: {
   id?: string;
-  onClose: (payload: Partial<IHabit>) => void;
+  onClose: (payload: Partial<Habit.Definition>) => void;
   children: React.ReactNode;
 }) => {
   const { color, name, frequency, archived } = useHabitStore((state) =>

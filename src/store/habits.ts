@@ -1,29 +1,15 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
-
-export type habitStatus = "checked" | "skipped";
+import type { Habit } from "@/types/habitTypes";
 
 interface HabitState {
   habits: {
-    [id: string]: IHabit;
+    [id: string]: Habit.Definition;
   };
-  markHabit: (id: string, date: string, status?: habitStatus) => void;
-  addHabit: (payload: Partial<IHabit>) => void;
-  editHabit: (id: string, payload: Partial<IHabit>) => void;
+  markHabit: (id: string, date: string, status?: Habit.Status) => void;
+  addHabit: (payload: Partial<Habit.Definition>) => void;
+  editHabit: (id: string, payload: Partial<Habit.Definition>) => void;
   deleteHabit: (id: string) => void;
-}
-
-export interface IHabit {
-  id: string;
-  name: string;
-  frequency: boolean[];
-  completedDates: {
-    [date: string]: habitStatus;
-  };
-  createdAt: Date;
-  updatedAt: Date;
-  color: string;
-  archived: boolean;
 }
 
 const HABIT_TEMPLATE = {

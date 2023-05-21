@@ -1,7 +1,7 @@
-import { habitStatus } from "@/store/habits";
+import type { Habit } from "@/types/habitTypes";
 
 export type Dates = {
-  [key: string]: habitStatus;
+  [key: string]: Habit.Status;
 };
 
 export function minDate(dates: Dates) {

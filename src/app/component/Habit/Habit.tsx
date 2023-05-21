@@ -3,11 +3,12 @@
 import AddHabitModal from "@/app/component/Habit/HabitModal/Modal";
 import { FireIcon, PenIcon } from "@/app/component/Icons";
 import Button from "@/components/common/Button";
-import { IHabit, useHabitStore } from "@/store/habits";
-import { currentStreak } from "@/utils/calculateStreak";
-import { streakRanges, summary, trackRecord } from "date-streaks";
+import { useHabitStore } from "@/store/habits";
+import type { Habit } from "@/types/habitTypes";
+import { summary } from "date-streaks";
 import dayjs from "dayjs";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   createContext,
   useContext,
@@ -18,14 +19,13 @@ import {
 import { useBreakpoint } from "use-breakpoint";
 import Day from "./Day/Day";
 import VerticalCalendarWrapper from "./VerticalCalendar";
-import { useRouter, usePathname } from "next/navigation";
 
 interface IhabitContext {
   calendarDates: string[];
   goToPrevDay: () => void;
   goToNextDay: () => void;
   habits: {
-    [id: string]: IHabit;
+    [id: string]: Habit.Definition;
   };
 }
 
@@ -113,7 +113,7 @@ export default function Habit() {
   );
 }
 
-const HabitRow = ({ habit }: { habit: IHabit }) => {
+const HabitRow = ({ habit }: { habit: Habit.Definition }) => {
   const { name, completedDates, id, color, frequency } = habit;
   const { calendarDates } = useHabitContext();
   const { markHabit } = useHabitStore((state) => state);

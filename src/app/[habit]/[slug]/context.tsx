@@ -1,7 +1,7 @@
-import { IHabit } from "@/store/habits";
+import type { Habit } from "@/types/habitTypes";
 import { createContext, useContext } from "react";
 
-const habitPageContext = createContext({} as IHabit);
+const habitPageContext = createContext({} as Habit.Definition);
 
 export const useHabitPageContext = () => {
   return useContext(habitPageContext);
@@ -12,7 +12,7 @@ export function HabitContextProvider({
   value,
 }: {
   children: React.ReactNode;
-  value: IHabit;
+  value: Habit.Definition;
 }) {
   return (
     <habitPageContext.Provider value={value}>

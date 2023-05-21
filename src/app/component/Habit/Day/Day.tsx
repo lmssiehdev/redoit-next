@@ -3,27 +3,14 @@ import Values from "values.js";
 import { w } from "windstitch";
 
 interface DayProps {
-  /**
-   * Is this the principal call to action on the page?
-   */
-  status: "checked" | "unchecked" | "skipped";
-  /**
-   * Habit color
-   */
+  status: "checked" | "skipped";
   color: string;
-  /**
-   * Optional click handler
-   */
   className?: string;
-
-  /**
-   * Optional click handler
-   */
   onClick?: () => void;
   isActiveDay: boolean;
 }
 
-const Div = w.div("border-dashed border-[1px] border-black/60 text-white", {
+const DayEle = w.div("border-dashed border-[1px] border-black/60 text-white", {
   variants: {
     shape: {
       rounded: "rounded-full",
@@ -63,16 +50,13 @@ export default function Day({
     return "";
   };
 
-  // const isActiveDayC =e
-  //   isActiveDay && (status === "skipped" || status === "chcked");
-
   const handleOnClick = () => {
     if (!isActiveDay) return;
     onClick && onClick();
     return;
   };
   return (
-    <Div
+    <DayEle
       title={status}
       onClick={handleOnClick}
       style={{
@@ -85,6 +69,6 @@ export default function Day({
       className={clsx(className)}
     >
       <span className="invisible">.</span>
-    </Div>
+    </DayEle>
   );
 }
