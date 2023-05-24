@@ -3,15 +3,14 @@ import "./globals.css";
 import { Indie_Flower } from "next/font/google";
 import localFont from "next/font/local";
 
-const indieFlower = Indie_Flower({
+const indieFlower = localFont({
+  src: "../../public/fonts/IndieFlower-Regular.ttf",
   variable: "--font-indie-flower",
-  subsets: ["latin"],
-  weight: "400",
   display: "swap",
 });
 
 const andalusia = localFont({
-  src: "../../public/Andalusia.otf",
+  src: "../../public/fonts/Andalusia.otf",
   variable: "--font-andalusia",
   display: "swap",
 });
