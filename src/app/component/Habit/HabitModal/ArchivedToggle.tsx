@@ -1,4 +1,5 @@
 import * as Toggle from "@radix-ui/react-toggle";
+import * as Switch from "@radix-ui/react-switch";
 import React from "react";
 
 export const ArchivedToggle = ({
@@ -10,17 +11,25 @@ export const ArchivedToggle = ({
 }) => {
   return (
     <>
-      <Toggle.Root
-        onPressedChange={setIsArchived}
+      <input
+        type="checkbox"
+        id="checkbox"
+        className="hidden"
+        checked={isArchived}
+      />
+      <Switch.Root
+        defaultChecked={isArchived}
+        checked={isArchived}
+        onCheckedChange={(v) => {
+          setIsArchived(v);
+        }}
         aria-label="Toggle Archive Habit"
         asChild
       >
-        {/* {isArchived ? "checked" : "unchecked"} */}
-        <>
-          <input type="checkbox" id="checkbox" />
+        <Switch.Thumb asChild>
           <label htmlFor="checkbox">Archive</label>
-        </>
-      </Toggle.Root>
+        </Switch.Thumb>
+      </Switch.Root>
     </>
   );
 };

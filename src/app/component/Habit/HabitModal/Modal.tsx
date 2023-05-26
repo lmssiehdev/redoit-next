@@ -43,6 +43,11 @@ function habitReducer(state: Partial<Habit.Definition>, action: HabitAction) {
         ...state,
         frequency: action.value,
       };
+    case "archived":
+      return {
+        ...state,
+        archived: action.value,
+      };
     case "reset":
       if (action.value) {
         return action.value;
@@ -136,64 +141,66 @@ const DialogDemo2 = ({
           {/* <Dialog.Description className="mt-2 text-sm font-normal text-gray-700 dark:text-gray-400">
             {"Make changes to your profile here. Click save when you're done."}
           </Dialog.Description> */}
-          <div>
-            <label
-              htmlFor="name"
-              className="text-lg py-2 font-medium text-gray-700"
-            >
-              Name
-            </label>
-            <Input
-              className={clsx("mt-1  w-full box-border")}
-              id="name"
-              value={state.name}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                dispatch({ type: "name", value: e.target.value })
-              }
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="name"
-              className="text-lg py-2 font-medium text-gray-700 inline-block"
-            >
-              Color
-            </label>
+          <form>
+            <div>
+              <label
+                htmlFor="name"
+                className="text-lg py-2 font-medium text-gray-700"
+              >
+                Name
+              </label>
+              <Input
+                className={clsx("mt-1  w-full box-border")}
+                id="name"
+                value={state.name}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  dispatch({ type: "name", value: e.target.value })
+                }
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="name"
+                className="text-lg py-2 font-medium text-gray-700 inline-block"
+              >
+                Color
+              </label>
 
-            <ColorSelector
-              updateColor={(value) => dispatch({ type: "color", value })}
-              selectedColor={state.color || emptyHabit.color}
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="name"
-              className="text-lg py-2 font-medium text-gray-700 inline-block"
-            >
-              Frequency
-            </label>
+              <ColorSelector
+                updateColor={(value) => dispatch({ type: "color", value })}
+                selectedColor={state.color || emptyHabit.color}
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="name"
+                className="text-lg py-2 font-medium text-gray-700 inline-block"
+              >
+                Frequency
+              </label>
 
-            <FrequencySelector
-              updateFrequency={(value) =>
-                dispatch({ type: "frequency", value })
-              }
-              frequency={state.frequency || emptyHabit.frequency}
-            />
-          </div>
+              <FrequencySelector
+                updateFrequency={(value) =>
+                  dispatch({ type: "frequency", value })
+                }
+                frequency={state.frequency || emptyHabit.frequency}
+              />
+            </div>
 
-          {id && (
-            <>
-              <fieldset className="mt-4">
-                <ArchivedToggle
-                  setIsArchived={(v) =>
-                    dispatch({ type: "archived", value: v })
-                  }
-                  // @ts-expect-error
-                  isArchived={state.archived || emptyHabit.archived}
-                />
-              </fieldset>
-            </>
-          )}
+            {id && (
+              <>
+                <fieldset className="mt-4">
+                  <ArchivedToggle
+                    setIsArchived={(v) =>
+                      dispatch({ type: "archived", value: v })
+                    }
+                    // @ts-expect-error
+                    isArchived={state.archived}
+                  />
+                </fieldset>
+              </>
+            )}
+          </form>
           <span className="text-red-500 py-1">{error}</span>
           <div className="flex mt-5 justify-between items-center">
             {id && (
@@ -201,7 +208,7 @@ const DialogDemo2 = ({
                 Delete Habit
               </Button>
             )}
-            <Dialog.Close onClick={() => handleSave()}>
+            <Dialog.Close onClick={() => handleSave()} asChild>
               <Button color="green" className="ml-auto">
                 {id ? "Update Habit" : "Add Habit"}
               </Button>

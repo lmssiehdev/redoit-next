@@ -61,8 +61,8 @@ const BREAKPOINTS = { 3: 0, 4: 420, 6: 576, 7: 700 };
 
 export default function Habit() {
   const path = usePathname();
-  console.log(path);
   // Get the current date
+  const isArchived = path === "/archive";
   const [last7Days, setLast7Days] = useState<string[]>([]);
   const [state, dispatch] = useReducer(reducer, {
     date: dayjs(),
@@ -80,6 +80,10 @@ export default function Habit() {
     setLast7Days([...arr.reverse()]);
   }, [state.date, breakpoint]);
 
+  const filteredHabits = Object.keys(habits).filter(
+    (key) => habits[key].archived === isArchived
+  );
+
   return (
     <habitContext.Provider
       value={{
@@ -92,7 +96,7 @@ export default function Habit() {
       <>
         <>
           <VerticalCalendarWrapper />
-          {Object.keys(habits).map((key) => {
+          {filteredHabits.map((key) => {
             const habit = habits[key];
             return (
               <div

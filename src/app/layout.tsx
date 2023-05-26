@@ -1,6 +1,5 @@
 import "./globals.css";
 
-import { Indie_Flower } from "next/font/google";
 import localFont from "next/font/local";
 
 const indieFlower = localFont({
@@ -74,18 +73,12 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // const supabase = createClient();
-  // const {
-  //   data: { user },
-  // } = await supabase.auth.getUser();
-  // const { data } = await supabase.from("habits").select().eq("id", user);
-
   const data = {};
   return (
     <html lang="en" className={`${indieFlower.variable} ${andalusia.variable}`}>
-      <body className="flex flex-col min-h-[100vh] px-2 font-indieFlower bg-[#faf0e4]">
-        <Navbar className="lg:w-[500px] lg:mx-auto mb-4" />
-        <div className="max-w-[1000px] mx-auto flex-1">
+      <body className="flex flex-col min-h-[100vh] max-w-screen-md mx-auto  px-2 font-indieFlower bg-[#faf0e4]">
+        <Navbar className="mb-4" />
+        <div className="mx-auto flex-1">
           <main className="flex-1 flex-wrap mx-auto">{children}</main>
         </div>
 

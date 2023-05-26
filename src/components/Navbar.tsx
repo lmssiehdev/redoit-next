@@ -24,9 +24,28 @@ export default function Navbar({ className }: Props): JSX.Element {
           Go to app ↗︎
         </Link>
       ) : (
-        <Link href="/" className="underline underline-offset-2 ">
-          Home
-        </Link>
+        <ul className="flex gap-4 items-center">
+          <li>
+            <Link
+              href="/web"
+              className={clsx({
+                "underline underline-offset-2": pahtName === "/web",
+              })}
+            >
+              Board
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/archive"
+              className={clsx({
+                "underline underline-offset-2": pahtName === "/archive",
+              })}
+            >
+              Archive
+            </Link>
+          </li>
+        </ul>
       )}
     </nav>
   );
