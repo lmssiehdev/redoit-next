@@ -5,7 +5,7 @@ import { FireIcon, PenIcon } from "@/app/component/Icons";
 import Button from "@/components/common/Button";
 import { useHabitStore } from "@/store/habits";
 import type { Habit } from "@/types/habitTypes";
-import { summary } from "date-streaks";
+import { summary } from "@/utils/calculateStreaks";
 import dayjs from "dayjs";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -13,6 +13,7 @@ import {
   createContext,
   useContext,
   useEffect,
+  useMemo,
   useReducer,
   useState,
 } from "react";
@@ -118,6 +119,10 @@ const HabitRow = ({ habit }: { habit: Habit.Definition }) => {
   const { calendarDates } = useHabitContext();
   const { markHabit } = useHabitStore((state) => state);
 
+  const streak = useMemo(() => {
+    return summary(completedDates, frequency).currentStreak;
+  }, [completedDates, frequency]);
+
   return (
     <>
       <div className="flex items-center justify-between gap-4">
@@ -149,7 +154,7 @@ const HabitRow = ({ habit }: { habit: Habit.Definition }) => {
       <div className="font-andalusia flex ">
         <div className="inline-flex justify-center gap-1 self-center ">
           <FireIcon className="h-4 " />
-          {summary({ dates: Object.keys(completedDates) }).currentStreak}
+          {streak}
         </div>
       </div>
     </>
