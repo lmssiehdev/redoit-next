@@ -1,19 +1,7 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@/app/component/Icons";
+import { months } from "@/constants";
 
-export const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
+
 
 interface Props {
   className?: string;

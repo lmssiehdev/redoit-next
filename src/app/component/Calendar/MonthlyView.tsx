@@ -2,6 +2,7 @@ import { useHabitStore } from "@/store/habits";
 import { useHabitPageContext } from "@/app/[habit]/[slug]/context";
 import dayjs from "dayjs";
 import Day from "../Habit/Day/Day";
+import { days } from "@/constants";
 
 interface Dates {
   [key: string]: number;
@@ -16,16 +17,6 @@ interface Props {
     month: number;
   };
 }
-
-export const days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
 
 function MonthlyView({ startOffset, daysInMonth, date }: Props) {
   const { markHabit } = useHabitStore((state) => state);
