@@ -1,12 +1,14 @@
 "use client";
 
 import { useHabitStore } from "@/store/habits";
+import { useMemo } from "react";
 import Habit from "../component/Habit/Habit";
 
 function ArchivedPage() {
   const habits = useHabitStore((state) => state.habits);
-  const archivedHabits = Object.keys(habits).find(
-    (key) => habits[key].archived === true
+  const archivedHabits = useMemo(
+    () => Object.keys(habits).find((key) => habits[key].archived === true),
+    [habits]
   );
 
   return (
