@@ -6,28 +6,6 @@ import AddHabitModal from "@/app/component/Habit/HabitModal/Modal";
 import Button from "@/components/common/Button";
 
 export default function Web() {
-  const habits = useHabitStore((state) => state.habits);
-
-  // async function ee() {
-  //   const { data, error } = await supabase
-  //     .from("habits")
-  //     .select("habits")
-  //     .eq("id", userId.user.id);
-
-  //   console.log(data, userId.user.id);
-  // }
-
-  // async function cc() {
-  //   const { data, error } = await supabase
-  //     .from("habits")
-  //     .update({
-  //       habits: { ...habits },
-  //     })
-  //     .eq("id", userId.user.id);
-
-  //   console.log(data, error, { ...habits });
-  // }
-
   return (
     <>
       {true ? (
@@ -44,7 +22,7 @@ export default function Web() {
 }
 
 const PageContent = () => {
-  const { habits, addHabit } = useHabitStore((state) => state);
+  const { habits } = useHabitStore((state) => state);
 
   const activeHabits = Object.keys(habits).filter(
     (key) => !habits[key].archived
@@ -57,17 +35,25 @@ const PageContent = () => {
           <Habit />
         </>
       ) : (
-        <div className="flex flex-col items-center">
-          <div className="text-center">
-            <div className="py-3 text-3xl">please create a habit</div>
-            <AddHabitModal onClose={(payload) => addHabit(payload)}>
-              <Button color="green" size="sm" mode="primary">
-                Add Habit
-              </Button>
-            </AddHabitModal>
-          </div>
-        </div>
+        <NoHabitsPrompt />
       )}
     </>
   );
 };
+
+function NoHabitsPrompt() {
+  const { addHabit } = useHabitStore((state) => state);
+
+  return (
+    <div className="flex flex-col items-center">
+      <div className="text-center">
+        <div className="py-3 text-3xl">please create a habit</div>
+        <AddHabitModal onClose={(payload) => addHabit(payload)}>
+          <Button color="green" size="sm" mode="primary">
+            Add Habit
+          </Button>
+        </AddHabitModal>
+      </div>
+    </div>
+  );
+}

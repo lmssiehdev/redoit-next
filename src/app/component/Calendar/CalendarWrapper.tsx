@@ -1,5 +1,4 @@
 import { useMonth } from "@/hooks/dayjs/useMonth";
-import { useDay } from "@/hooks/useDay";
 import MonthlyNavigation from "./MonthlyNavigation";
 import MonthlyView from "./MonthlyView";
 
