@@ -62,7 +62,7 @@ function MonthlyNavigation({
           className="flex items-center border-1"
         >
           <ClickableIconWrapper className="p-2" disabled={isCurrentMonth}>
-            <Icon>
+            <Icon asChild>
               <ChevronRightIcon />
             </Icon>
           </ClickableIconWrapper>
