@@ -1,5 +1,5 @@
 import dayjs, { type Dayjs } from "dayjs";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useImmerReducer } from "use-immer";
 
 type State = {
@@ -63,15 +63,13 @@ export function useDay() {
 
   const [chunk, setChunk] = useState<string[]>([]);
 
-  useEffect(() => {
+  useMemo(() => {
     const tempArray: string[] = [];
-
     for (let i = 0; i < 7; i++) {
       const fomatedDate = state.date.subtract(i, "day").format("YYYY-M-D");
       tempArray.push(fomatedDate);
+      setChunk(tempArray.reverse());
     }
-
-    setChunk(tempArray.reverse());
   }, [state.date]);
 
   return {
