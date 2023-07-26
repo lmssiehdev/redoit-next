@@ -2,7 +2,7 @@
 
 import AddHabitModal from "@/app/component/Habit/HabitModal/Modal";
 import Button from "@/components/common/Button";
-import { useDay } from "@/hooks/useDay";
+import { useDateNavigator } from "@/hooks/dayjs/useDayNavigator";
 import { useHabitStore } from "@/store/habits";
 import type { Habit } from "@/types/habitTypes";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
@@ -42,14 +42,14 @@ export function HabitContextProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const { chunk, goToNextDay, goToPrevDay } = useDay();
+  const { dateArray, goToNextDay, goToPrevDay } = useDateNavigator();
   const habits = useHabitStore((state) => state.habits);
   const { breakpoint } = useBreakpoint(BREAKPOINTS, 7);
 
   return (
     <habitContext.Provider
       value={{
-        calendarDates: [...chunk].splice(0, breakpoint),
+        calendarDates: [...dateArray].splice(0, breakpoint),
         goToNextDay,
         goToPrevDay,
         habits,
