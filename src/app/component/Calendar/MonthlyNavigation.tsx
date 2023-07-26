@@ -10,6 +10,27 @@ interface Props {
   prevMonth: () => void;
   isCurrentMonth: boolean;
 }
+function CalendarNavigation({ children }: { children: React.ReactNode }) {
+  return <>{children}</>;
+}
+
+CalendarNavigation.Root = CalendarNavigation;
+
+function CalendarNavigationText({ children }: { children: React.ReactNode }) {
+  return <>{children}</>;
+}
+
+CalendarNavigation.Content = CalendarNavigationText;
+
+interface ButtonProps extends React.ComponentPropsWithoutRef<"button"> {
+  children: React.ReactNode;
+}
+
+function CalendarNavigationTrigger({ children, ...props }: ButtonProps) {
+  return <button {...props}>{children}</button>;
+}
+
+CalendarNavigation.Trigger = CalendarNavigationTrigger;
 
 function MonthlyNavigation({
   className,
