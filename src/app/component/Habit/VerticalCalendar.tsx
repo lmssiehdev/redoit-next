@@ -1,9 +1,8 @@
-import { useHabitContext } from "./Habit";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/app/component/Icons";
-import { useBreakpoint } from "use-breakpoint";
-import { days, months } from "@/constants";
 import Icon, { ClickableIconWrapper } from "@/components/common/Icon";
+import { days } from "@/constants";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { useHabitContext } from "./Habit";
 
 interface Props {
   className?: string;
@@ -40,11 +39,12 @@ export default function VerticalCalendarWrapper({ className }: Props) {
       <CalendarNavigation.Root>
         <div className="flex items-center justify-center">
           <ClickableIconWrapper
-            as={CalendarNavigation.Trigger}
             onClick={goToPrevDay}
             className="flex items-center justify-end p-2 ml-auto"
           >
-            <Icon as={ChevronLeftIcon}></Icon>
+            <Icon asChild>
+              <ChevronLeftIcon />
+            </Icon>
           </ClickableIconWrapper>
         </div>
 
@@ -73,11 +73,12 @@ export default function VerticalCalendarWrapper({ className }: Props) {
         </CalendarNavigation.Content>
         <div className="flex items-center justify-center">
           <ClickableIconWrapper
-            as={CalendarNavigation.Trigger}
-            className="flex items-center justify-center p-2"
             onClick={goToNextDay}
+            className="flex items-center justify-end p-2 ml-auto"
           >
-            <Icon as={ChevronRightIcon}></Icon>
+            <Icon asChild>
+              <ChevronRightIcon />
+            </Icon>
           </ClickableIconWrapper>
         </div>
       </CalendarNavigation.Root>

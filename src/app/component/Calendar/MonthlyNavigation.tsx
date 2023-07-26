@@ -48,7 +48,9 @@ function MonthlyNavigation({
           className="flex items-center border-1"
         >
           <ClickableIconWrapper className="p-2">
-            <Icon as={ChevronLeftIcon}></Icon>
+            <Icon asChild>
+              <ChevronLeftIcon />
+            </Icon>
           </ClickableIconWrapper>
         </CalendarNavigation.Trigger>
         <CalendarNavigation.Content>
@@ -60,7 +62,9 @@ function MonthlyNavigation({
           className="flex items-center border-1"
         >
           <ClickableIconWrapper className="p-2" disabled={isCurrentMonth}>
-            <Icon as={ChevronRightIcon}></Icon>
+            <Icon>
+              <ChevronRightIcon />
+            </Icon>
           </ClickableIconWrapper>
         </CalendarNavigation.Trigger>
       </div>

@@ -12,7 +12,7 @@ interface DayProps {
   size?: "md" | "lg" | "full";
 }
 
-const DayEle = styled("div", {
+const DayEle = styled("button", {
   base: "border-dashed border-[1px] border-black/60 text-white aspect-square ",
   variants: {
     shape: {
@@ -24,9 +24,6 @@ const DayEle = styled("div", {
       lg: "h-9 w-9",
       full: "h-full w-full",
     },
-    checked: (yes: boolean, color: string) => (yes ? "amazing" : color),
-    isActiveDay: (yes: boolean) =>
-      yes ? "!border-solid" : "opacity-50 cursor-not-allowed",
   },
   defaultVariants: {
     shape: undefined,
@@ -65,7 +62,6 @@ function Day({
   const handleOnClick = () => {
     if (!isActiveDay) return;
     onClick && onClick();
-    return;
   };
   return (
     <DayEle
@@ -76,10 +72,12 @@ function Day({
         color: color,
       }}
       sise={size ?? "lg"}
-      checked={true}
-      isActiveDay={isActiveDay}
+      // isActiveDay={isActiveDay}
       shape="rounded"
-      className={clsx(className, "overflow-hidden ")}
+      className={clsx(className, "overflow-hidden", {
+        "!border-solid": isActiveDay,
+        "opacity-50 cursor-not-allowed": !isActiveDay,
+      })}
     >
       {status === "skipped" && (
         <Scrible
