@@ -76,7 +76,7 @@ export default async function RootLayout({
   const data = {};
   return (
     <html lang="en" className={`${indieFlower.variable} ${andalusia.variable}`}>
-      <body className="flex flex-col min-h-[100vh] max-w-screen-md mx-auto  px-2 font-indieFlower bg-[#faf0e4]">
+      <body className="flex flex-col min-h-[100vh] max-w-screen-md !mx-auto  px-2 font-indieFlower bg-[#faf0e4]">
         <Navbar className="mb-4" />
         <div className="mx-auto flex-1">
           <main className="flex-1 flex-wrap mx-auto">{children}</main>

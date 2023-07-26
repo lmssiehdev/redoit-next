@@ -1,11 +1,8 @@
-"use client";
-
 import DummyHabitDemo from "@/components/DummyHabitDemo";
 import LandingPageCallToAction from "@/components/LandingPageCallToAction";
-import Image from "next/image";
-import Habit from "./component/Habit/Habit";
 
-export default function Home() {
+const accessToken = "F7I2qBgjZ-rN-kRuPXdGUuPBXn2stsRbM8xAQ9psifk";
+export default async function Home() {
   return (
     <>
       <div>
@@ -24,15 +21,23 @@ export default function Home() {
             <LandingPageCallToAction />
           </div>
         </div>
-        {/* <DummyHabitDemo /> */}
         <div>
+          {/* <p className="py-2 text-gray-500 text-center">
+            * Click on any date to see how it’s work
+          </p> */}
+          <DummyHabitDemo />
+          <p className="py-2 text-gray-500 text-center">
+            Like what you see? Sign up now and start tracking
+          </p>
+        </div>
+        {/* <div>
           <Image
             src="/images/preview_screenshot.png"
             width={500}
             height={500}
             alt="app preview screenshot"
           />
-        </div>
+        </div> */}
       </div>
     </>
   );

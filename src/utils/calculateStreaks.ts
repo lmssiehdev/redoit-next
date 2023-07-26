@@ -9,7 +9,7 @@ dayjs.extend(isYesterday);
 dayjs.extend(isTomorrow);
 
 type asDate = Date | string;
-type datesParam =
+export type datesParam =
   | asDate[]
   | {
       [date: string]: Habit.Status;
@@ -20,7 +20,7 @@ function differenceInDays(later: asDate, earlier: asDate) {
   return date.diff(earlier, "day");
 }
 
-function sortDates(dates: asDate[]) {
+export function sortDates(dates: asDate[]) {
   return dates.sort((a, b) => (dayjs(a).isAfter(dayjs(b)) ? 1 : -1));
 }
 
@@ -46,7 +46,7 @@ export function isObject(stuff: unknown) {
   return stuff instanceof Object && Array.isArray(stuff) && stuff != null;
 }
 
-const getDatesParameter = (dates: datesParam) => {
+export const getDatesParameter = (dates: datesParam) => {
   if (Array.isArray(dates)) return dates;
   else if (dates instanceof Object)
     return Object.entries(dates).map(([key]) => key);

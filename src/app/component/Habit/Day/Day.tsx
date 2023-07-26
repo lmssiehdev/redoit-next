@@ -1,6 +1,7 @@
 import clsx from "clsx";
-import Values from "values.js";
-import { w } from "windstitch";
+import { W, w } from "windstitch";
+import { Scrible } from "@/app/component/Icons";
+import { memo, useMemo } from "react";
 
 interface DayProps {
   status: "checked" | "skipped";
@@ -8,33 +9,41 @@ interface DayProps {
   className?: string;
   onClick?: () => void;
   isActiveDay: boolean;
+  size?: "md" | "lg" | "full";
 }
 
-const DayEle = w.div("border-dashed border-[1px] border-black/60 text-white", {
-  variants: {
-    shape: {
-      rounded: "rounded-full",
+const DayEle = w.div(
+  "border-dashed border-[1px] border-black/60 text-white aspect-square ",
+  {
+    variants: {
+      shape: {
+        rounded: "rounded-full",
+        square: "",
+      },
+      sise: {
+        md: "h-7 w-7",
+        lg: "h-9 w-9",
+        full: "h-full w-full",
+      },
+      checked: (yes: boolean, color: string) => (yes ? "amazing" : color),
+      isActiveDay: (yes: boolean) =>
+        yes ? "!border-solid" : "opacity-50 cursor-not-allowed",
     },
-    sise: {
-      md: "h-7 w-7",
-      lg: "h-9 w-9",
+    defaultVariants: {
+      shape: undefined,
+      size: "md",
     },
-    checked: (yes: boolean, color: string) => (yes ? "amazing" : color),
-    isActiveDay: (yes: boolean) =>
-      yes ? "!border-solid" : "opacity-50 cursor-not-allowed",
-  },
-  defaultVariants: {
-    shape: "rounded",
-    size: "md",
-  },
-});
+  }
+);
 
-export default function Day({
+function Day({
   status,
   color,
   onClick,
   className,
   isActiveDay,
+  // TODO: Refactor me
+  size,
 }: DayProps) {
   const getColor = () => {
     if (!isActiveDay || status === "skipped")
@@ -50,6 +59,11 @@ export default function Day({
     return "";
   };
 
+  const direction = useMemo(
+    () => (Math.random() < 0.5 ? "-45deg" : "45deg"),
+    []
+  );
+
   const handleOnClick = () => {
     if (!isActiveDay) return;
     onClick && onClick();
@@ -60,15 +74,26 @@ export default function Day({
       title={status}
       onClick={handleOnClick}
       style={{
-        background: getColor(),
+        background: status === "checked" ? color : "",
+        color: color,
       }}
-      shape="rounded"
-      sise="lg"
+      sise={size ?? "lg"}
       checked={true}
       isActiveDay={isActiveDay}
-      className={clsx(className)}
+      shape="rounded"
+      className={clsx(className, "overflow-hidden ")}
     >
-      <span className="invisible">.</span>
+      {status === "skipped" && (
+        <Scrible
+          className="scale-[2.4]"
+          style={{
+            fill: color,
+            rotate: direction,
+          }}
+        />
+      )}
+      {/* <span className="invisible">.</span> */}
     </DayEle>
   );
 }
+export default memo(Day);

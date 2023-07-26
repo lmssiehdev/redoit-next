@@ -2,8 +2,10 @@ import { useHabitPageContext } from "@/app/[habit]/[slug]/context";
 import { minDate, longestStreak } from "@/utils/calculateStreak";
 import clsx from "clsx";
 import { streakRanges } from "date-streaks";
+import { streakRanges as streakRanges2 } from "@/utils/streakRanges";
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 const convertHexToRGBA = (hexCode = "", opacity = 1) => {
   let hex = hexCode.replace("#", "");
@@ -48,7 +50,6 @@ function getTop5RangesPercentages(ranges: RangeReturnType): number[] {
 
 export default function Streaks() {
   const { completedDates, color } = useHabitPageContext();
-  const mockData = ["50%", "20%", "60%", "70%"];
   const highlight = convertHexToRGBA(color);
   const [streaksArray, setStreaksArray] = useState<IStreakRange[]>([]);
 
@@ -57,8 +58,12 @@ export default function Streaks() {
       dates: Object.keys(completedDates),
     });
 
+    const y = streakRanges2(completedDates);
+
+    console.log([...ranges], [...y]);
+
     const sortedRanges = ranges.sort((a, b) => b.duration - a.duration);
-    const top5Ranges = sortedRanges.slice(0, 5);
+    const top5Ranges = sortedRanges.slice(0, 4);
     const top5RangesPercentages = getTop5RangesPercentages(top5Ranges);
 
     const updatedRage = top5Ranges.map((item, index) => {
@@ -69,10 +74,7 @@ export default function Streaks() {
     });
 
     setStreaksArray(updatedRage);
-    console.log(updatedRage);
   }, [completedDates]);
-
-  console.log("streaks has been rerendered");
 
   return (
     <>
@@ -84,7 +86,7 @@ export default function Streaks() {
             </span>
             <div
               className={clsx(
-                "highlight yellow text-center justify-center px-1 min-w-fit py-[0.1rem]"
+                "highlight yellow text-center justify-center px-1 min-w-fit py-[0.1rem] transition-width duration-1000 ease-in-out"
               )}
               style={{
                 width: `${item.percentage}%`,
