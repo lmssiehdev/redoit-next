@@ -1,7 +1,6 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@/app/component/Icons";
 import Icon, { ClickableIconWrapper } from "@/components/common/Icon";
 import { months } from "@/constants";
-import { w } from "windstitch";
 
 interface Props {
   className?: string;

@@ -1,7 +1,7 @@
-import clsx from "clsx";
-import { W, w } from "windstitch";
 import { Scrible } from "@/app/component/Icons";
+import clsx from "clsx";
 import { memo, useMemo } from "react";
+import { styled } from "react-tailwind-variants";
 
 interface DayProps {
   status: "checked" | "skipped";
@@ -12,9 +12,9 @@ interface DayProps {
   size?: "md" | "lg" | "full";
 }
 
-const DayEle = w.div(
-  "border-dashed border-[1px] border-black/60 text-white aspect-square ",
-  {
+const DayEle = styled("div"
+{
+    base: "border-dashed border-[1px] border-black/60 text-white aspect-square ",
     variants: {
       shape: {
         rounded: "rounded-full",

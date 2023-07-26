@@ -67,6 +67,12 @@ dependencies:
   react-dom:
     specifier: 18.2.0
     version: 18.2.0(react@18.2.0)
+  react-tailwind-variants:
+    specifier: ^1.0.2
+    version: 1.0.2(@types/react@18.2.6)(react@18.2.0)(tailwind-merge@1.14.0)
+  tailwind-merge:
+    specifier: ^1.14.0
+    version: 1.14.0
   typescript:
     specifier: 4.9.5
     version: 4.9.5
@@ -76,9 +82,6 @@ dependencies:
   use-immer:
     specifier: ^0.9.0
     version: 0.9.0(immer@10.0.2)(react@18.2.0)
-  windstitch:
-    specifier: ^0.3.0
-    version: 0.3.0(react@18.2.0)
   zustand:
     specifier: ^4.3.6
     version: 4.3.6(immer@10.0.2)(react@18.2.0)
@@ -7498,6 +7501,19 @@ packages:
       tslib: 2.5.0
     dev: false
 
+  /react-tailwind-variants@1.0.2(@types/react@18.2.6)(react@18.2.0)(tailwind-merge@1.14.0):
+    resolution: {integrity: sha512-2efsuDPr3hjC6Dx7DaQ5MmiolI7+jpnGLOeBB6wvX/Ma+qRTYbDcYGAILU2hjV++2cMglUCgdD7uG/vG/z4qmA==}
+    peerDependencies:
+      react: ^16.8 || ^17.0 || ^18.0
+      tailwind-merge: ^1.10.0
+    dependencies:
+      '@radix-ui/react-slot': 1.0.2(@types/react@18.2.6)(react@18.2.0)
+      react: 18.2.0
+      tailwind-merge: 1.14.0
+    transitivePeerDependencies:
+      - '@types/react'
+    dev: false
+
   /react@18.2.0:
     resolution: {integrity: sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==}
     engines: {node: '>=0.10.0'}
@@ -8016,6 +8032,10 @@ packages:
     dependencies:
       '@pkgr/utils': 2.3.1
       tslib: 2.5.0
+    dev: false
+
+  /tailwind-merge@1.14.0:
+    resolution: {integrity: sha512-3mFKyCo/MBcgyOTlrY8T7odzZFx+w+qKSMAmdFzRvqBfLlSigU6TZnlFHK0lkMwj9Bj8OYU+9yW9lmGuS0QEnQ==}
     dev: false
 
   /tailwindcss@3.2.7(postcss@8.4.21):
@@ -8715,15 +8735,6 @@ packages:
       siginfo: 2.0.0
       stackback: 0.0.2
     dev: true
-
-  /windstitch@0.3.0(react@18.2.0):
-    resolution: {integrity: sha512-xn48NPYKCcj8QHfn2/sQGF/zWRuHfSweRkUnSQnL6Szoyp7L2D6b+XbjlQY8FW8BIzc2Rq3ltx0Z5KpfFLyJkw==}
-    engines: {node: '>=12'}
-    peerDependencies:
-      react: '>=16'
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /word-wrap@1.2.3:
     resolution: {integrity: sha512-Hz/mrNwitNRh/HUAtM/VT/5VH+ygD6DV7mYKZAtHOrbs8U7lvPS6xf7EJKMF0uW1KJCl0H701g3ZGus+muE5vQ==}
