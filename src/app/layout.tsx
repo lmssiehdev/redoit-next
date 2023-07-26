@@ -73,7 +73,6 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const data = {};
   return (
     <html lang="en" className={`${indieFlower.variable} ${andalusia.variable}`}>
       <body className="flex flex-col min-h-[100vh] max-w-screen-md !mx-auto  px-2 font-indieFlower bg-[#faf0e4]">

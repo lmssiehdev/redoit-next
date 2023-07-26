@@ -19,7 +19,7 @@ const DayEle = styled("button", {
       rounded: "rounded-full",
       square: "",
     },
-    sise: {
+    size: {
       md: "h-7 w-7",
       lg: "h-9 w-9",
       full: "h-full w-full",
@@ -71,7 +71,7 @@ function Day({
         background: status === "checked" ? color : "",
         color: color,
       }}
-      sise={size ?? "lg"}
+      size={size ?? "lg"}
       // isActiveDay={isActiveDay}
       shape="rounded"
       className={clsx(className, "overflow-hidden", {
