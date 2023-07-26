@@ -2,7 +2,7 @@
 
 import CalendarWrapper from "@/app/component/Calendar/CalendarWrapper";
 import MyResponsiveLine from "@/app/component/Charts/Chart";
-import { HabitCard } from "@/app/component/Habit/Habit";
+import { HabitCard } from "@/app/component/Habit/HabitCard";
 import Streaks from "@/app/component/Habit/Streaks/Streaks";
 import { useHabitStore } from "@/store/habits";
 import { HabitContextProvider } from "./context";
@@ -33,14 +33,14 @@ export default function Habit({
                 <h3 className="text-center font-bold text-3xl py-4">Streaks</h3>
                 <Streaks />
               </div>
-              <div>
+              {/* <div>
                 <h3 className="text-center font-bold text-3xl py-4">
                   Completion Rate
                 </h3>
                 <div className="h-[300px] w-[350px] ">
                   <MyResponsiveLine color={color} dates={completedDates} />
                 </div>
-              </div>
+              </div> */}
             </>
           )}
         </div>

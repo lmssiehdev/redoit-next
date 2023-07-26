@@ -41,6 +41,7 @@ function MonthlyView({ startOffset, daysInMonth, date }: Props) {
           return (
             <div className="flex justify-center" key={day} title={formatedDate}>
               <Day
+                size="full"
                 status={habit.completedDates[formatedDate]}
                 color={habit.color}
                 isActiveDay={habit.frequency[dateJS.day()]}
