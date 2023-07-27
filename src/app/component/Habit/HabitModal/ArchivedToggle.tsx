@@ -15,14 +15,12 @@ export const ArchivedToggle = ({
         type="checkbox"
         id="checkbox"
         className="hidden"
-        checked={isArchived}
+        defaultChecked={isArchived}
       />
       <Switch.Root
         defaultChecked={isArchived}
         checked={isArchived}
-        onCheckedChange={(v) => {
-          setIsArchived(v);
-        }}
+        onCheckedChange={setIsArchived}
         aria-label="Toggle Archive Habit"
         asChild
       >
