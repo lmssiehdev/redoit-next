@@ -42,12 +42,11 @@ const PageContent = () => {
 
 function NoHabitsPrompt() {
   const addHabit = useHabitStore((state) => state.addHabit);
-
   return (
     <div className="flex flex-col items-center">
       <div className="text-center">
         <div className="py-3 text-3xl">please create a habit</div>
-        <AddHabitModal onClose={(payload) => addHabit(payload)}>
+        <AddHabitModal onSave={(payload) => addHabit(payload)}>
           <Button color="green" size="sm" mode="primary">
             Add Habit
           </Button>

@@ -1,7 +1,7 @@
 import * as Dialog from "@radix-ui/react-dialog";
 
-import React, { useReducer, useState } from "react";
 import * as Form from "@radix-ui/react-form";
+import React, { useState } from "react";
 
 import { CrossIcon } from "@/app/component/Icons";
 import Button from "@/components/common/Button";
@@ -9,6 +9,7 @@ import Input from "@/components/common/Input";
 import { useHabitStore } from "@/store/habits";
 import type { Habit } from "@/types/habitTypes";
 import clsx from "clsx";
+import { useImmerReducer } from "use-immer";
 import { ArchivedToggle } from "./ArchivedToggle";
 import { ColorSelector } from "./ColorSelector";
 import { FrequencySelector } from "./FrequencySelector";
@@ -20,36 +21,27 @@ const emptyHabit = {
   archived: false,
 };
 
-type HabitAction =
-  | { type: "name"; value: string }
-  | { type: "color"; value: string }
-  | { type: "frequency"; value: boolean[] }
-  | { type: "archived"; value: boolean }
-  | { type: "reset"; value?: typeof emptyHabit };
+type State = Pick<Habit.Definition, keyof typeof emptyHabit>;
 
-function habitReducer(state: Partial<Habit.Definition>, action: HabitAction) {
+type Action =
+  | { type: "UPDATE_NAME"; value: string }
+  | { type: "UPDATE_COLOR"; value: string }
+  | { type: "UPDATE_FREQUENCY"; value: boolean[] }
+  | { type: "UPDATE_ARCHIVED"; value: boolean }
+  | { type: "RESET"; value?: typeof emptyHabit };
+
+function reducer(state: State, action: Action) {
   switch (action.type) {
-    case "name":
-      return {
-        ...state,
-        name: action.value,
-      };
-    case "color":
-      return {
-        ...state,
-        color: action.value,
-      };
-    case "frequency":
-      return {
-        ...state,
-        frequency: action.value,
-      };
-    case "archived":
-      return {
-        ...state,
-        archived: action.value,
-      };
-    case "reset":
+    case "UPDATE_NAME":
+      state.name = action.value;
+      return state;
+    case "UPDATE_COLOR":
+      state.color = action.value;
+      return state;
+    case "UPDATE_FREQUENCY":
+      state.frequency = action.value;
+      return state;
+    case "RESET":
       if (action.value) {
         return action.value;
       }
@@ -57,12 +49,11 @@ function habitReducer(state: Partial<Habit.Definition>, action: HabitAction) {
         name: "",
         color: "#debd8f",
         frequency: Array(7).fill(true),
+        archived: false,
       };
-    case "archived":
-      return {
-        ...state,
-        archived: action.value,
-      };
+    case "UPDATE_ARCHIVED":
+      state.archived = action.value;
+      return state;
     default:
       // @ts-expect-error Property 'type' does not exist on type 'never'.
       throw new Error(`Invalid action type: ${action?.type}`);
@@ -71,51 +62,43 @@ function habitReducer(state: Partial<Habit.Definition>, action: HabitAction) {
 
 const DialogDemo2 = ({
   id,
-  onClose,
+  onSave,
   children,
 }: {
   id?: string;
-  onClose: (payload: Partial<Habit.Definition>) => void;
+  onSave: (payload: Partial<Habit.Definition>) => void;
   children: React.ReactNode;
 }) => {
-  const { color, name, frequency, archived } = useHabitStore((state) =>
-    id ? state.habits[id] : emptyHabit
-  );
-  const editHabit = useHabitStore((state) => state.editHabit);
+  const [open, setOpen] = useState(false);
+  const habit = useHabitStore((state) => (id ? state.habits[id] : emptyHabit));
+
+  const { color, name, frequency, archived } = habit;
+
   const deleteHabit = useHabitStore((state) => state.deleteHabit);
 
-  const [state, dispatch] = useReducer(habitReducer, {
+  const [state, dispatch] = useImmerReducer(reducer, {
     color,
     name,
     frequency,
     archived,
   });
 
-  const handleClose = () => {
-    onClose(state);
-    return;
-  };
-
   const handleSave = () => {
-    if (id) {
-      editHabit(id, state);
-    } else onClose(state);
+    setOpen(false);
+    onSave(state);
   };
 
-  const handleReset = () => {
+  const handleReset = (v: boolean) => {
+    setOpen(v);
     if (id) {
-      dispatch({ type: "reset", value: { color, name, frequency, archived } });
+      dispatch({ type: "RESET", value: { color, name, frequency, archived } });
       return;
     }
-    dispatch({ type: "reset" });
-  };
-
-  const handleDelete = () => {
-    if (id) deleteHabit(id);
+    dispatch({ type: "RESET" });
   };
 
   return (
-    <Dialog.Root onOpenChange={handleReset}>
+    <Dialog.Root open={open} onOpenChange={handleReset}>
       <Dialog.Trigger asChild>{children}</Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-20 bg-black/50" />
@@ -131,10 +114,6 @@ const DialogDemo2 = ({
           <Dialog.Title className="text-2xl font-medium text-gray-900">
             {id ? "Edit Habit" : "Add Habit"}
           </Dialog.Title>
-          {/* <Dialog.Description className="mt-2 text-sm font-normal text-gray-700 dark:text-gray-400">
-            {"Make changes to your profile here. Click save when you're done."}
-          </D
-           </Form.Root>ialog.Description> */}
           <Form.Root
             onSubmit={(e) => {
               e.preventDefault();
@@ -151,8 +130,8 @@ const DialogDemo2 = ({
                   required
                   className={clsx("mt-1  w-full box-border")}
                   value={state.name}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    dispatch({ type: "name", value: e.target.value })
+                  onChange={({ target }) =>
+                    dispatch({ type: "UPDATE_NAME", value: target.value })
                   }
                 />
               </Form.Control>
@@ -170,7 +149,9 @@ const DialogDemo2 = ({
               </label>
 
               <ColorSelector
-                updateColor={(value) => dispatch({ type: "color", value })}
+                updateColor={(value) =>
+                  dispatch({ type: "UPDATE_COLOR", value })
+                }
                 selectedColor={state.color || emptyHabit.color}
               />
             </div>
@@ -184,9 +165,9 @@ const DialogDemo2 = ({
 
               <FrequencySelector
                 updateFrequency={(value) =>
-                  dispatch({ type: "frequency", value })
+                  dispatch({ type: "UPDATE_FREQUENCY", value })
                 }
-                frequency={state.frequency || emptyHabit.frequency}
+                frequency={state.frequency}
               />
             </div>
 
@@ -195,9 +176,8 @@ const DialogDemo2 = ({
                 <fieldset className="mt-4">
                   <ArchivedToggle
                     setIsArchived={(v) =>
-                      dispatch({ type: "archived", value: v })
+                      dispatch({ type: "UPDATE_ARCHIVED", value: v })
                     }
-                    // @ts-expect-error
                     isArchived={state.archived}
                   />
                 </fieldset>
@@ -205,7 +185,7 @@ const DialogDemo2 = ({
             )}
             <div className="flex mt-5 justify-between items-center">
               {id && (
-                <Button color="red" size="sm" onClick={() => handleDelete()}>
+                <Button color="red" size="sm" onClick={() => deleteHabit(id)}>
                   Delete Habit
                 </Button>
               )}

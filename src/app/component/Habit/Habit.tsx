@@ -7,7 +7,7 @@ import { useHabitStore } from "@/store/habits";
 import type { Habit } from "@/types/habitTypes";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { usePathname } from "next/navigation";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useMemo } from "react";
 import { useBreakpoint } from "use-breakpoint";
 import HabitRow from "./HabitRow";
 import VerticalCalendarWrapper from "./VerticalCalendar";
@@ -67,8 +67,10 @@ export default function Habit() {
   const [parent] = useAutoAnimate();
 
   const isArchived = path === "/archive";
-  const filteredHabits = Object.keys(habits).filter(
-    (key) => habits[key].archived === isArchived
+  const filteredHabits = useMemo(
+    () =>
+      Object.keys(habits).filter((key) => habits[key].archived === isArchived),
+    [habits]
   );
 
   return (
@@ -81,7 +83,11 @@ export default function Habit() {
             return <HabitRow key={key} habit={habit} />;
           })}
         </div>
-        <AddHabitModal onClose={(payload) => addHabit(payload)}>
+        <AddHabitModal
+          onSave={(payload) => {
+            addHabit(payload);
+          }}
+        >
           <Button color="green" size="sm" mode="primary">
             Add Habit
           </Button>

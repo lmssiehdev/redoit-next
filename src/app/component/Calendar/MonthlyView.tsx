@@ -24,7 +24,7 @@ function MonthlyView({ startOffset, daysInMonth, date }: Props) {
 
   return (
     <div className="">
-      <div className=" grid grid-cols-7 grid-rows-7 children:(aspect-square h-12) gap-3">
+      <div className=" grid grid-cols-7 grid-rows-7 children:aspect-square children:h-12 gap-3">
         {days.map((day) => (
           <div key={day} className=" flex justify-center items-center opaci ">
             {day.substr(0, 2)}

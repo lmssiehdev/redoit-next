@@ -3,6 +3,7 @@ import AddHabitModal from "@/app/component/Habit/HabitModal/Modal";
 import { PenIcon } from "@/app/component/Icons";
 import { useHabitStore } from "@/store/habits";
 import Link from "next/link";
+import { memo } from "react";
 
 export const HabitCard = ({
   id,
@@ -13,8 +14,6 @@ export const HabitCard = ({
   color: string;
   name: string;
 }) => {
-  const editHabit = useHabitStore((state) => state.editHabit);
-
   return (
     <>
       <div className="flex items-center gap-2 overflow-hidden">
@@ -32,17 +31,26 @@ export const HabitCard = ({
         >
           {name}
         </Link>
+        <EditHabitModalTrigger id={id} />
       </div>
-      <AddHabitModal
-        id={id}
-        onClose={(payload) => {
-          editHabit(id, payload);
-        }}
-      >
-        <div>
-          <PenIcon className="h-4 ml-1 hidden md:block" />
-        </div>
-      </AddHabitModal>
     </>
   );
 };
+
+const EditHabitModalTrigger = memo(({ id }: { id: string }) => {
+  const editHabit = useHabitStore((state) => state.editHabit);
+
+  return (
+    <AddHabitModal
+      id={id}
+      onSave={(payload) => {
+        console.log("habit", payload);
+        editHabit(id, payload);
+      }}
+    >
+      <div>
+        <PenIcon className="h-4 ml-1 hidden md:block" />
+      </div>
+    </AddHabitModal>
+  );
+});

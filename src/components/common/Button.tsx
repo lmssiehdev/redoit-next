@@ -1,4 +1,3 @@
-"use client";
 import { styled } from "react-tailwind-variants";
 
 const Button = styled("button", {
@@ -10,11 +9,10 @@ const Button = styled("button", {
       green: "text-green-700 bg-green-200",
     },
     mode: {
+      none: undefined,
       primary: "border-solid border-[#37353f] shadow-[3px_3px_0_0_#37353f]",
       secondary:
         "border-solid border-[#37353f] shadow-[4px_4px_0_0] shadow-red-600/50 ",
-      defaultMode:
-        " bg-transparent border-solid border-[#37353f] after:absolute after:h-full after:w-full after:top-0 after:left-0 after:bg-yellow-500/30 after:translate-x-2 after:translate-y-2 after:hover:translate-x-0 after:hover:translate-y-0 after:transition-all after:z-[-1]",
     },
     size: {
       sm: "text-sm px-2 py-1",
@@ -29,7 +27,7 @@ const Button = styled("button", {
   defaultVariants: {
     weight: "normal",
     size: "md",
-    mode: undefined,
+    mode: "none",
   },
 });
 
