@@ -56,18 +56,14 @@ const store = immer<State & Action>((set, get) => ({
       return state;
     });
   },
-  editHabit: (id, payload) => {
-    const habit = {
-      ...HABIT_TEMPLATE,
-      ...payload,
-      id,
-    };
-
-    return set((state) => {
-      state.habits[id] = habit;
+  editHabit: (id, payload) =>
+    set((state) => {
+      state.habits[id] = {
+        ...state.habits[id],
+        ...payload,
+      };
       return state;
-    });
-  },
+    }),
   deleteHabit: (id) =>
     set((state) => {
       delete state.habits[id];
