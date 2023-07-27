@@ -22,14 +22,13 @@ export default function Web() {
 }
 
 const PageContent = () => {
-  const { habits } = useHabitStore((state) => state);
+  const habits = useHabitStore((state) => state.habits);
 
-  const activeHabits = Object.keys(habits).filter(
-    (key) => !habits[key].archived
-  );
+  const activeHabits = Object.keys(habits).some((key) => !habits[key].archived);
+
   return (
     <>
-      {activeHabits.length > 0 ? (
+      {activeHabits ? (
         <>
           <h2 className="text-2xl highlight ">My Habits</h2>
           <Habit />
@@ -42,7 +41,7 @@ const PageContent = () => {
 };
 
 function NoHabitsPrompt() {
-  const { addHabit } = useHabitStore((state) => state);
+  const addHabit = useHabitStore((state) => state.addHabit);
 
   return (
     <div className="flex flex-col items-center">

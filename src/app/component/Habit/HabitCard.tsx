@@ -13,7 +13,8 @@ export const HabitCard = ({
   color: string;
   name: string;
 }) => {
-  const { editHabit } = useHabitStore((state) => state);
+  const editHabit = useHabitStore((state) => state.editHabit);
+
   return (
     <>
       <div className="flex items-center gap-2 overflow-hidden">

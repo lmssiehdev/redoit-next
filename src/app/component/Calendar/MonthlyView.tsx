@@ -19,7 +19,7 @@ interface Props {
 }
 
 function MonthlyView({ startOffset, daysInMonth, date }: Props) {
-  const { markHabit } = useHabitStore((state) => state);
+  const markHabit = useHabitStore((state) => state.markHabit);
   const habit = useHabitPageContext();
 
   return (
