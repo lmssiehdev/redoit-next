@@ -37,7 +37,7 @@ export const HabitCard = ({
   );
 };
 
-const EditHabitModalTrigger = memo(({ id }: { id: string }) => {
+const EditHabitModalTrigger = memo(function EditHabitModalTrigger({ id }: { id: string }) {
   const editHabit = useHabitStore((state) => state.editHabit);
 
   return (

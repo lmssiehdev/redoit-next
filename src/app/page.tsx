@@ -1,7 +1,7 @@
-import DummyHabitDemo from "@/components/DummyHabitDemo";
+// import DummyHabitDemo from "@/components/DummyHabitDemo";
 import LandingPageCallToAction from "@/components/LandingPageCallToAction";
 
-const accessToken = "F7I2qBgjZ-rN-kRuPXdGUuPBXn2stsRbM8xAQ9psifk";
+// const accessToken = "F7I2qBgjZ-rN-kRuPXdGUuPBXn2stsRbM8xAQ9psifk";
 export default async function Home() {
   return (
     <>
@@ -22,11 +22,9 @@ export default async function Home() {
           </div>
         </div>
         <div>
-          {/* <p className="py-2 text-gray-500 text-center">
-            * Click on any date to see how it’s work
-          </p> */}
-          <DummyHabitDemo />
+          {/* <DummyHabitDemo /> */}
           <p className="py-2 text-gray-500 text-center">
+            {/* Click on any date to see how it’s work */}
             Like what you see? Sign up now and start tracking
           </p>
         </div>

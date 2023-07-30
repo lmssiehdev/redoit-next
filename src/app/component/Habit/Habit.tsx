@@ -66,11 +66,12 @@ export default function Habit() {
   const addHabit = useHabitStore((state) => state.addHabit);
   const [parent] = useAutoAnimate();
 
-  const isArchived = path === "/archive";
   const filteredHabits = useMemo(
-    () =>
-      Object.keys(habits).filter((key) => habits[key].archived === isArchived),
-    [habits]
+    () => {
+      const isArchived = path === "/archive";
+      return Object.keys(habits).filter((key) => habits[key].archived === isArchived)
+    },
+  [habits, path]
   );
 
   return (

@@ -44,7 +44,7 @@ export function useDateNavigator() {
       type: "setDateArray",
       value: tempArray.reverse(),
     });
-  }, [state.date]);
+  }, [state.date, dispatch]);
 
   return {
     dateArray: state.dateArray,

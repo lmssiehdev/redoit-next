@@ -5,6 +5,12 @@ import {
   type datesParam,
 } from "./calculateStreaks";
 
+interface StreakRange {
+  start: Date;
+  end: Date | null;
+  duration: number;
+}
+
 function streakRanges(datesParam: datesParam = []) {
   if (datesParam == undefined || datesParam.length === 0) {
     return [];
@@ -15,7 +21,7 @@ function streakRanges(datesParam: datesParam = []) {
   const allDates = [...sortDates(dates)];
 
   return streaks
-    .reduce((acc, streak) => {
+    .reduce((acc: StreakRange[], streak) => {
       let start, end;
       let days = allDates.slice(0, streak);
       allDates.splice(0, streak);
