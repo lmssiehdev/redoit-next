@@ -2,7 +2,7 @@
 
 import { useHabitStore } from "@/store/habits";
 import { useMemo } from "react";
-import Habit from "../component/Habit/Habit";
+import Habit from "../component/Habit/habit";
 
 function ArchivedPage() {
   const habits = useHabitStore((state) => state.habits);

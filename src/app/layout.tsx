@@ -14,8 +14,9 @@ const andalusia = localFont({
   display: "swap",
 });
 
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/navbar";
 import type { Metadata } from "next";
+import Footer from "@/components/footer";
 
 const APP_NAME = "Redoit";
 const APP_DEFAULT_TITLE = "Redoit Habit Tracker";
@@ -86,17 +87,3 @@ export default async function RootLayout({
     </html>
   );
 }
-
-const Footer = () => {
-  return (
-    <footer className="mx-auto py-2">
-      <a
-        className="underline underline-offset-2 "
-        href="https://tally.so/r/wvMWaA"
-        target="_blank"
-      >
-        send feedback please ↗︎
-      </a>
-    </footer>
-  );
-};

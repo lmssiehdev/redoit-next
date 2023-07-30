@@ -1,7 +1,7 @@
 import { useHabitStore } from "@/store/habits";
 import { useHabitPageContext } from "@/app/[habit]/[slug]/context";
 import dayjs from "dayjs";
-import Day from "../Habit/Day/Day";
+import Day from "../Habit/day";
 import { days } from "@/constants";
 
 interface Dates {

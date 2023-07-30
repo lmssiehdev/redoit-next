@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import type { Habit } from "@/types/habitTypes";
+import type { Habit } from "@/types/habit-types";
 
 type State = {
   habits: {

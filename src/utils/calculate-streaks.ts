@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import isToday from "dayjs/plugin/isToday";
 import isYesterday from "dayjs/plugin/isYesterday";
 import isTomorrow from "dayjs/plugin/isTomorrow";
-import { Habit } from "@/types/habitTypes";
+import { Habit } from "@/types/habit-types";
 
 dayjs.extend(isToday);
 dayjs.extend(isYesterday);

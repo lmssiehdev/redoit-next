@@ -1,9 +1,9 @@
 "use client";
 
-import CalendarWrapper from "@/app/component/Calendar/CalendarWrapper";
+import CalendarWrapper from "@/app/component/Calendar/calendar-wrapper";
 import MyResponsiveLine from "@/app/component/Charts/Chart";
-import { HabitCard } from "@/app/component/Habit/HabitCard";
-import Streaks from "@/app/component/Habit/Streaks/Streaks";
+import { HabitCard } from "@/app/component/Habit/habit-card";
+import Streaks from "@/app/component/Habit/streaks";
 import { useHabitStore } from "@/store/habits";
 import { HabitContextProvider } from "./context";
 

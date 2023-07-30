@@ -1,4 +1,4 @@
-import { Scrible } from "@/app/component/Icons";
+import { Scrible } from "@/components/icons";
 import clsx from "clsx";
 import { memo, useMemo } from "react";
 import { styled } from "react-tailwind-variants";

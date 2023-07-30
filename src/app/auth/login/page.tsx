@@ -1,7 +1,7 @@
 "use client";
 
 import Button from "@/components/common/Button";
-import { GoogleIcon } from "@/app/component/Icons";
+import { GoogleIcon } from "@/components/icons";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEventHandler, useState } from "react";

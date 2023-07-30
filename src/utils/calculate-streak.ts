@@ -1,4 +1,4 @@
-import type { Habit } from "@/types/habitTypes";
+import type { Habit } from "@/types/habit-types";
 
 export type Dates = {
   [key: string]: Habit.Status;

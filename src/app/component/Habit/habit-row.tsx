@@ -1,14 +1,14 @@
 "use client";
 
-import { FireIcon } from "@/app/component/Icons";
+import { FireIcon } from "@/components/icons";
 import { useHabitStore } from "@/store/habits";
-import type { Habit } from "@/types/habitTypes";
-import { summary } from "@/utils/calculateStreaks";
+import type { Habit } from "@/types/habit-types";
+import { summary } from "@/utils/calculate-streaks";
 import dayjs from "dayjs";
 import { useMemo } from "react";
-import Day from "./Day/Day";
-import { useHabitContext } from "./Habit";
-import { HabitCard } from "./HabitCard";
+import Day from "./day";
+import { useHabitContext } from "./habit";
+import { HabitCard } from "./habit-card";
 
 export default function HabitRow({ habit }: { habit: Habit.Definition }) {
   const { name, completedDates, id, color, frequency } = habit;

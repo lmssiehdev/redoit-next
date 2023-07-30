@@ -2,15 +2,15 @@
 
 import AddHabitModal from "@/app/component/Habit/HabitModal/Modal";
 import Button from "@/components/common/Button";
-import { useDateNavigator } from "@/hooks/dayjs/useDayNavigator";
+import { useDateNavigator } from "@/hooks/dayjs/use-date-navigator";
 import { useHabitStore } from "@/store/habits";
-import type { Habit } from "@/types/habitTypes";
+import type { Habit } from "@/types/habit-types";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { usePathname } from "next/navigation";
 import { createContext, useContext, useMemo } from "react";
 import { useBreakpoint } from "use-breakpoint";
-import HabitRow from "./HabitRow";
-import VerticalCalendarWrapper from "./VerticalCalendar";
+import HabitRow from "./habit-row";
+import VerticalCalendarWrapper from "./vertical-calendar";
 
 interface IhabitContext {
   calendarDates: string[];

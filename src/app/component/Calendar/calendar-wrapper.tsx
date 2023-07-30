@@ -1,6 +1,6 @@
-import { useMonth } from "@/hooks/dayjs/useMonth";
-import MonthlyNavigation from "./MonthlyNavigation";
-import MonthlyView from "./MonthlyView";
+import { useMonth } from "@/hooks/dayjs/use-month";
+import MonthlyNavigation from "./monthly-navigation";
+import MonthlyView from "./monthly-view";
 
 function CalendarWrapper() {
   // TODO: use context maybe?

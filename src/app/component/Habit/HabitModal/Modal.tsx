@@ -3,11 +3,11 @@ import * as Dialog from "@radix-ui/react-dialog";
 import * as Form from "@radix-ui/react-form";
 import React, { useState } from "react";
 
-import { CrossIcon } from "@/app/component/Icons";
+import { CrossIcon } from "@/components/icons";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import { useHabitStore } from "@/store/habits";
-import type { Habit } from "@/types/habitTypes";
+import type { Habit } from "@/types/habit-types";
 import clsx from "clsx";
 import { useImmerReducer } from "use-immer";
 import { ArchivedToggle } from "./ArchivedToggle";

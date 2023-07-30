@@ -1,5 +1,5 @@
-import { type datesParam } from "@/utils/calculateStreaks";
-import { streakRanges } from "@/utils/streakRanges";
+import { type datesParam } from "@/utils/calculate-streaks";
+import { streakRanges } from "@/utils/streak-ranges";
 import dayjs from "dayjs";
 
 describe("streakRanges", () => {

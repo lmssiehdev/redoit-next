@@ -1,4 +1,4 @@
-import { summary, type datesParam } from "@/utils/calculateStreaks";
+import { summary, type datesParam } from "@/utils/calculate-streaks";
 import dayjs from "dayjs";
 
 const date = dayjs();

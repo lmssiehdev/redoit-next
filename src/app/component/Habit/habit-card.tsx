@@ -1,6 +1,6 @@
 "use client";
 import AddHabitModal from "@/app/component/Habit/HabitModal/Modal";
-import { PenIcon } from "@/app/component/Icons";
+import { PenIcon } from "@/components/icons";
 import { useHabitStore } from "@/store/habits";
 import Link from "next/link";
 import { memo } from "react";

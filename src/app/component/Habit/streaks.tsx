@@ -1,8 +1,8 @@
 import { useHabitPageContext } from "@/app/[habit]/[slug]/context";
-import { minDate, longestStreak } from "@/utils/calculateStreak";
+import { minDate, longestStreak } from "@/utils/calculate-streak";
 import clsx from "clsx";
 import { streakRanges } from "date-streaks";
-import { streakRanges as streakRanges2 } from "@/utils/streakRanges";
+import { streakRanges as streakRanges2 } from "@/utils/streak-ranges";
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import { useAutoAnimate } from "@formkit/auto-animate/react";

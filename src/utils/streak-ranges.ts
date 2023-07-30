@@ -3,7 +3,7 @@ import {
   sortDates,
   getDatesParameter,
   type datesParam,
-} from "./calculateStreaks";
+} from "./calculate-streaks";
 
 interface StreakRange {
   start: Date;

@@ -1,6 +1,6 @@
 "use client";
 
-import Habit from "@/app/component/Habit/Habit";
+import Habit from "@/app/component/Habit/habit";
 import { useHabitStore } from "@/store/habits";
 import AddHabitModal from "@/app/component/Habit/HabitModal/Modal";
 import Button from "@/components/common/Button";

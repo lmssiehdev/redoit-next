@@ -1,34 +1,12 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@/app/component/Icons";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/components/icons";
 import Icon, { ClickableIconWrapper } from "@/components/common/Icon";
 import { days } from "@/constants";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { useHabitContext } from "./Habit";
+import { useHabitContext } from "./habit";
 
 interface Props {
   className?: string;
 }
-
-function CalendarNavigation({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
-}
-
-CalendarNavigation.Root = CalendarNavigation;
-
-function CalendarNavigationText({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
-}
-
-CalendarNavigation.Content = CalendarNavigationText;
-
-interface ButtonProps extends React.ComponentPropsWithoutRef<"button"> {
-  children: React.ReactNode;
-}
-
-function CalendarNavigationTrigger({ children, ...props }: ButtonProps) {
-  return <button {...props}>{children}</button>;
-}
-
-CalendarNavigation.Trigger = CalendarNavigationTrigger;
 
 export default function VerticalCalendarWrapper({ className }: Props) {
   const { calendarDates, goToNextDay, goToPrevDay } = useHabitContext();
@@ -36,7 +14,6 @@ export default function VerticalCalendarWrapper({ className }: Props) {
 
   return (
     <>
-      <CalendarNavigation.Root>
         <div className="flex items-center justify-center">
           <ClickableIconWrapper
             onClick={goToPrevDay}
@@ -47,8 +24,6 @@ export default function VerticalCalendarWrapper({ className }: Props) {
             </Icon>
           </ClickableIconWrapper>
         </div>
-
-        <CalendarNavigation.Content>
           <div className="flex flex-1 justify-between" ref={parent}>
             <div className="flex flex-1">
               {calendarDates &&
@@ -70,7 +45,6 @@ export default function VerticalCalendarWrapper({ className }: Props) {
                 })}
             </div>
           </div>
-        </CalendarNavigation.Content>
         <div className="flex items-center justify-center">
           <ClickableIconWrapper
             onClick={goToNextDay}
@@ -81,7 +55,6 @@ export default function VerticalCalendarWrapper({ className }: Props) {
             </Icon>
           </ClickableIconWrapper>
         </div>
-      </CalendarNavigation.Root>
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@/app/component/Icons";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/components/icons";
 import Icon, { ClickableIconWrapper } from "@/components/common/Icon";
 import { months } from "@/constants";
 

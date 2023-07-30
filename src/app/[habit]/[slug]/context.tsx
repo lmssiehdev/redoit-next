@@ -1,4 +1,4 @@
-import type { Habit } from "@/types/habitTypes";
+import type { Habit } from "@/types/habit-types";
 import { createContext, useContext } from "react";
 
 const habitPageContext = createContext({} as Habit.Definition);
