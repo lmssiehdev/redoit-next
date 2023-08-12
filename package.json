@@ -38,6 +38,7 @@
     "typescript": "4.9.5",
     "use-breakpoint": "^3.0.7",
     "use-immer": "^0.9.0",
+    "vaul": "^0.1.1",
     "zustand": "^4.3.9"
   },
   "devDependencies": {

@@ -1,9 +1,9 @@
 "use client";
-import AddHabitModal from "@/app/component/Habit/HabitModal/Modal";
+import HabitEditor from "@/app/ui/modals/add-edit-habit-modal";
 import { PenIcon } from "@/components/icons";
 import { useHabitStore } from "@/store/habits";
 import Link from "next/link";
-import { memo } from "react";
+import { memo, useState } from "react";
 
 export const HabitCard = ({
   id,
@@ -37,20 +37,28 @@ export const HabitCard = ({
   );
 };
 
-const EditHabitModalTrigger = memo(function EditHabitModalTrigger({ id }: { id: string }) {
+const EditHabitModalTrigger = memo(function EditHabitModalTrigger({
+  id,
+}: {
+  id: string;
+}) {
+  const [showModal, setShowModal] = useState(false);
   const editHabit = useHabitStore((state) => state.editHabit);
 
   return (
-    <AddHabitModal
-      id={id}
-      onSave={(payload) => {
-        console.log("habit", payload);
-        editHabit(id, payload);
-      }}
-    >
-      <div>
+    <>
+      <button onClick={() => setShowModal(true)}>
         <PenIcon className="h-4 ml-1 hidden md:block" />
-      </div>
-    </AddHabitModal>
+      </button>
+      <HabitEditor
+        setShowModal={setShowModal}
+        showModal={showModal}
+        id={id}
+        onSave={(payload) => {
+          console.log("habit", payload);
+          editHabit(id, payload);
+        }}
+      />
+    </>
   );
 });

@@ -1,13 +1,12 @@
 "use client";
 
-import AddHabitModal from "@/app/component/Habit/HabitModal/Modal";
+import HabitEditor from "@/app/ui/modals/add-edit-habit-modal";
 import Button from "@/components/common/Button";
 import { useDateNavigator } from "@/hooks/dayjs/use-date-navigator";
 import { useHabitStore } from "@/store/habits";
 import type { Habit } from "@/types/habit-types";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { usePathname } from "next/navigation";
-import { createContext, useContext, useMemo } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 import { useBreakpoint } from "use-breakpoint";
 import HabitRow from "./habit-row";
 import VerticalCalendarWrapper from "./vertical-calendar";
@@ -63,20 +62,17 @@ export function HabitContextProvider({
 export default function Habit() {
   const path = usePathname();
   const habits = useHabitStore((state) => state.habits);
-  const addHabit = useHabitStore((state) => state.addHabit);
-  const [parent] = useAutoAnimate();
 
-  const filteredHabits = useMemo(
-    () => {
-      const isArchived = path === "/archive";
-      return Object.keys(habits).filter((key) => habits[key].archived === isArchived)
-    },
-  [habits, path]
-  );
+  const filteredHabits = useMemo(() => {
+    const isArchived = path === "/archive";
+    return Object.keys(habits).filter(
+      (key) => habits[key].archived === isArchived
+    );
+  }, [habits, path]);
 
   return (
-    <HabitContextProvider>
-      <>
+    <>
+      <HabitContextProvider>
         <div className="my-2 grid grid-cols-[minmax(0px,200px),6fr,40px] gap-3">
           <VerticalCalendarWrapper />
           {filteredHabits.map((key) => {
@@ -84,16 +80,34 @@ export default function Habit() {
             return <HabitRow key={key} habit={habit} />;
           })}
         </div>
-        <AddHabitModal
-          onSave={(payload) => {
-            addHabit(payload);
-          }}
-        >
-          <Button color="green" size="sm" mode="primary">
-            Add Habit
-          </Button>
-        </AddHabitModal>
-      </>
-    </HabitContextProvider>
+      </HabitContextProvider>
+      <AddHabitButton />
+    </>
+  );
+}
+
+export function AddHabitButton() {
+  const [showModal, setShowModal] = useState(false);
+  const addHabit = useHabitStore((state) => state.addHabit);
+
+  return (
+    <>
+      <Button
+        onClick={() => setShowModal(true)}
+        color="green"
+        size="sm"
+        mode="primary"
+      >
+        Add Habit
+      </Button>
+      <HabitEditor
+        setShowModal={setShowModal}
+        showModal={showModal}
+        onSave={(payload) => {
+          console.log("habit", payload);
+          addHabit(payload);
+        }}
+      />
+    </>
   );
 }

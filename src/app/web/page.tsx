@@ -1,9 +1,7 @@
 "use client";
 
-import Habit from "@/app/component/Habit/habit";
+import Habit, { AddHabitButton } from "@/app/component/Habit/habit";
 import { useHabitStore } from "@/store/habits";
-import AddHabitModal from "@/app/component/Habit/HabitModal/Modal";
-import Button from "@/components/common/Button";
 
 export default function Web() {
   return (
@@ -41,16 +39,11 @@ const PageContent = () => {
 };
 
 function NoHabitsPrompt() {
-  const addHabit = useHabitStore((state) => state.addHabit);
   return (
     <div className="flex flex-col items-center">
       <div className="text-center">
         <div className="py-3 text-3xl">please create a habit</div>
-        <AddHabitModal onSave={(payload) => addHabit(payload)}>
-          <Button color="green" size="sm" mode="primary">
-            Add Habit
-          </Button>
-        </AddHabitModal>
+        <AddHabitButton />
       </div>
     </div>
   );
